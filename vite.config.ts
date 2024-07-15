@@ -5,7 +5,6 @@ import ElementPlus from 'unplugin-element-plus/vite'
 import svgLoader from 'vite-svg-loader'
 import copy from 'rollup-plugin-copy'
 import dts from 'vite-plugin-dts'
-
 const libDir = path.resolve(__dirname, 'lib')
 const srcDir = path.resolve(__dirname, 'src')
 

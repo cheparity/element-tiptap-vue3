@@ -30,14 +30,14 @@ English
 
 ## ✨ Features
 
-- 🎨Use [element-plus](https://github.com/element-plus/element-plus) components
-- 💅Many out of box [extensions](https://github.com/okijhhyu/element-tiptap-vue3#extensions) (welcome to submit an issue for feature request👏)
-- 🔖Markdown support
-- 📘TypeScript support
-- 🌐I18n support(`en`, `zh`, `pl`, `ru`, `de`, `ko`, `es`, `zh_tw`, `fr`, `pt_br`, `nl`, `he`). welcome to contribute more languages
-- 🎈Events you might use: `create`, `transaction`, `focus`, `blur`, `destroy`
-- 🍀Fully extensible, you can customize editor extension and its menu button view
-- 💻Also can control the behavior of the editor directly, customize the editor for yourself.
+-   🎨Use [element-plus](https://github.com/element-plus/element-plus) components
+-   💅Many out of box [extensions](https://github.com/okijhhyu/element-tiptap-vue3#extensions) (welcome to submit an issue for feature request👏)
+-   🔖Markdown support
+-   📘TypeScript support
+-   🌐I18n support(`en`, `zh`, `pl`, `ru`, `de`, `ko`, `es`, `zh_tw`, `fr`, `pt_br`, `nl`, `he`). welcome to contribute more languages
+-   🎈Events you might use: `create`, `transaction`, `focus`, `blur`, `destroy`
+-   🍀Fully extensible, you can customize editor extension and its menu button view
+-   💻Also can control the behavior of the editor directly, customize the editor for yourself.
 
 ## 📦 Installation
 
@@ -50,22 +50,22 @@ npm i element-tiptap-vue3-fixed
 #### Install plugin
 
 ```js
-import { createApp } from 'vue';
-import App from './App.vue';
-import ElementPlus from 'element-plus';
-import ElementTiptapPlugin from 'element-tiptap-vue3-fixed';
+import { createApp } from 'vue'
+import App from './App.vue'
+import ElementPlus from 'element-plus'
+import ElementTiptapPlugin from 'element-tiptap-vue3-fixed'
 // import ElementTiptap's styles
-import 'element-tiptap-vue3-fixed/lib/style.css';
+import 'element-tiptap-vue3-fixed/lib/style.css'
 
-const app = createApp(App);
+const app = createApp(App)
 
 // use ElementPlus's plugin
-app.use(ElementPlus);
+app.use(ElementPlus)
 // use this package's plugin
-app.use(ElementTiptapPlugin);
+app.use(ElementTiptapPlugin)
 // Now you register `'el-tiptap'` component globally.
 
-app.mount('#app');
+app.mount('#app')
 ```
 
 _Or_
@@ -74,11 +74,11 @@ _Or_
 
 ```vue
 <template>
-  <el-tiptap ...></el-tiptap>
+    <el-tiptap ...></el-tiptap>
 </template>
 
 <script setup>
-import { ElementTiptap } from 'element-tiptap-vue3-fixed';
+import { ElementTiptap } from 'element-tiptap-vue3-fixed'
 </script>
 ```
 
@@ -86,46 +86,46 @@ import { ElementTiptap } from 'element-tiptap-vue3-fixed';
 
 ```vue
 <template>
-  <el-tiptap v-model:content="content" :extensions="extensions" />
+    <el-tiptap v-model:content="content" :extensions="extensions" />
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import {
-  // necessary extensions
-  Doc,
-  Text,
-  Paragraph,
-  //________________________
-  Heading,
-  Bold,
-  Underline,
-  Italic,
-  Strike,
-  BulletList,
-  OrderedList,
-} from 'element-tiptap-vue3-fixed';
+    // necessary extensions
+    Doc,
+    Text,
+    Paragraph,
+    //________________________
+    Heading,
+    Bold,
+    Underline,
+    Italic,
+    Strike,
+    BulletList,
+    OrderedList,
+} from 'element-tiptap-vue3-fixed'
 
 // editor extensions
 // they will be added to menubar and bubble menu by the order you declare.
 const extensions = [
-  Doc,
-  Text,
-  Paragraph,
-  Heading.configure({ level: 5 }),
-  Bold.configure({ bubble: true }), // render command-button in bubble menu.
-  Underline.configure({ bubble: true, menubar: false }), // render command-button in bubble menu but not in menubar.
-  Italic,
-  Strike,
-  BulletList,
-  OrderedList,
-];
+    Doc,
+    Text,
+    Paragraph,
+    Heading.configure({ level: 5 }),
+    Bold.configure({ bubble: true }), // render command-button in bubble menu.
+    Underline.configure({ bubble: true, menubar: false }), // render command-button in bubble menu but not in menubar.
+    Italic,
+    Strike,
+    BulletList,
+    OrderedList,
+]
 
 // editor's content
 const content = ref(`
   <h1>Heading</h1>
   <p>This Editor is awesome!</p>
-`);
+`)
 </script>
 ```
 
@@ -139,42 +139,42 @@ You can use the necessary extensions. The corresponding command-buttons will be 
 
 All available extensions:
 
-- `Doc`
-- `Text`
-- `Paragraph`
-- `Heading`
-- `Bold`
-- `Italic`
-- `Strike`
-- `Underline`
-- `Link`
-- `Image`
-- `Iframe`
-- `CodeBlock`
-- `Blockquote`
-- `BulletList`
-- `OrderedList`
-- `TaskList`
-- `TextAlign`
-- `Indent`
-- `LineHeight`
-- `HorizontalRule`
-- `HardBreak`
-- `History`
-- `Table`
-- `FormatClear`
-- `Color`
-- `Highlight`
-- `Print`
-- `Fullscreen`
-- `SelectAll`
-- `FontFamily`
-- `FontSize`
-- `CodeView`
-- [`CodeBlockLowlight`](https://tiptap.dev/api/nodes/code-block-lowlight)
-- [`Gapcursor`](https://tiptap.dev/api/extensions/gapcursor/)
-- [`Dropcursor`](https://tiptap.dev/api/extensions/gapcursor/)
-- [`Commands`](https://tiptap.dev/api/utilities/suggestion)
+-   `Doc`
+-   `Text`
+-   `Paragraph`
+-   `Heading`
+-   `Bold`
+-   `Italic`
+-   `Strike`
+-   `Underline`
+-   `Link`
+-   `Image`
+-   `Iframe`
+-   `CodeBlock`
+-   `Blockquote`
+-   `BulletList`
+-   `OrderedList`
+-   `TaskList`
+-   `TextAlign`
+-   `Indent`
+-   `LineHeight`
+-   `HorizontalRule`
+-   `HardBreak`
+-   `History`
+-   `Table`
+-   `FormatClear`
+-   `Color`
+-   `Highlight`
+-   `Print`
+-   `Fullscreen`
+-   `SelectAll`
+-   `FontFamily`
+-   `FontSize`
+-   `CodeView`
+-   [`CodeBlockLowlight`](https://tiptap.dev/api/nodes/code-block-lowlight)
+-   [`Gapcursor`](https://tiptap.dev/api/extensions/gapcursor/)
+-   [`Dropcursor`](https://tiptap.dev/api/extensions/gapcursor/)
+-   [`Commands`](https://tiptap.dev/api/utilities/suggestion)
 
 You can find all extensions docs [here](https://github.com/Leecason/element-tiptap/issues/107).
 
@@ -209,81 +209,56 @@ Custom svg for extensions
     buttonIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16" fill="currentColor"> ... </svg>'
  })
 ```
+
 for (Indent, History) ['swg', 'swg']
 for (TextAlign) ['swg', 'swg', 'swg', 'swg']
 
 .. pull-quote::
-  **Warning**
-  
-  **NB:** Although the buttonIcon attribute supports incoming HTML fragments, it is very dangerous to dynamically render arbitrary HTML on the website, because it is easy to cause XSS attack. Please make sure that the content of buttonIcon is trustworthy. Never assign user-submitted content to the buttonIcon attribute.
+**Warning**
+
+**NB:** Although the buttonIcon attribute supports incoming HTML fragments, it is very dangerous to dynamically render arbitrary HTML on the website, because it is easy to cause XSS attack. Please make sure that the content of buttonIcon is trustworthy. Never assign user-submitted content to the buttonIcon attribute.
 
 Extention: `Image`
 
 Insert images with original width
 
 ```vue
- Image.configure({
-    defaultWidth: null
-  })
+Image.configure({ defaultWidth: null })
 ```
 
 Insert images with width: 400px
 
 ```vue
- Image.configure({
-    defaultWidth: 400
-  })
+Image.configure({ defaultWidth: 400 })
 ```
 
 Dragging images (tests)
-adding button which allow to move images 
+adding button which allow to move images
+
 ```vue
- Image.configure({
-    draggable: true
-  })
+Image.configure({ draggable: true })
 ```
 
 Extention: `Link`
 
 placeholder
-```vue
-  Link.configure({ 
-    addLinkPlaceholder: 'add link', // placeholder for adding link
-    editLinkPlaceholder: 'edit link' // placeholder for editing link
-  }),
 
-You can customize the extension. See [Custom extensions](https://tiptap.dev/guide/custom-extensions).
-### Example custom extension
-```vue
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import {
-  Editor
-} from '@tiptap/core';
-import { CommandButton } from 'element-tiptap-vue3-fixed';
+````vue
+Link.configure({ addLinkPlaceholder: 'add link', // placeholder for adding link editLinkPlaceholder: 'edit link' //
+placeholder for editing link }), You can customize the extension. See [Custom
+extensions](https://tiptap.dev/guide/custom-extensions). ### Example custom extension ```vue import CodeBlockLowlight
+from '@tiptap/extension-code-block-lowlight'; import { Editor } from '@tiptap/core'; import { CommandButton } from
+'element-tiptap-vue3-fixed'; export default CodeBlockLowlight.extend({ addOptions() { return { ...this.parent?.(),
+button({ editor, t }: { editor: Editor; t: (...args: any[]) => string }) { return { component: CommandButton, //
+component of button which is used in menubar or bubblemenu (u can write your own component of button) componentProps: {
+// props is used in component command: () => { // command on click button editor.commands.toggleCodeBlock(); }, //
+WARNING buttonIcon attribute supports incoming HTML fragments, it is very dangerous to dynamically render arbitrary HTML
+on the website, because it is easy to cause XSS attack. buttonIcon: '
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16" fill="currentColor"> ... </svg>
+', // your custom svg, if there is not uses default isActive: editor.isActive('codeBlock'), icon: 'code', // name of
+element-tiptap icon (don't customized) tooltip: t('editor.extensions.CodeBlock.tooltip'), }, }; }, }; }, });
+````
 
-export default CodeBlockLowlight.extend({
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      button({ editor, t }: { editor: Editor; t: (...args: any[]) => string }) {
-        return {
-          component: CommandButton, // component of button which is used in menubar or bubblemenu (u can write your own component of button)
-          componentProps: { // props is used in component
-            command: () => { // command on click button
-              editor.commands.toggleCodeBlock();
-            },
-            // WARNING buttonIcon attribute supports incoming HTML fragments, it is very dangerous to dynamically render arbitrary HTML on the website, because it is easy to cause XSS attack.
-            buttonIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16" fill="currentColor"> ... </svg>', // your custom svg, if there is not uses default
-            isActive: editor.isActive('codeBlock'),
-            icon: 'code', // name of element-tiptap icon (don't customized)
-            tooltip: t('editor.extensions.CodeBlock.tooltip'),
-          },
-        };
-      },
-    };
-  },
-});
-```
 ### setContent
 
 ```html
@@ -291,9 +266,10 @@ export default CodeBlockLowlight.extend({
 ```
 
 ```vue
-this.$refs.editor.setContent(Content); 
-can do reactive, but history brokes so add this function, to change content if necessary.
+this.$refs.editor.setContent(Content); can do reactive, but history brokes so add this function, to change content if
+necessary.
 ```
+
 ### placeholder
 
 Type: `string`
@@ -428,18 +404,18 @@ import en from 'element-tiptap-vue3-fixed/lib/locales/en';
 
 Available languages:
 
-- `en`(default)
-- `zh`
-- `pl` by @FurtakM
-- `ru` by @baitkul
-- `de` by @Thesicstar
-- `ko` by @Hotbrains
-- `es` by @koas
-- `zh_tw` by @eric0324
-- `fr` by @LPABelgium
-- `pt_br` by @valterleonardo
-- `nl` by @Arne-Jan
-- `he` by @shovalPMS
+-   `en`(default)
+-   `zh`
+-   `pl` by @FurtakM
+-   `ru` by @baitkul
+-   `de` by @Thesicstar
+-   `ko` by @Hotbrains
+-   `es` by @koas
+-   `zh_tw` by @eric0324
+-   `fr` by @LPABelgium
+-   `pt_br` by @valterleonardo
+-   `nl` by @Arne-Jan
+-   `he` by @shovalPMS
 
 Welcome contribution.
 
@@ -449,7 +425,7 @@ Welcome contribution.
 
 ```vue
 <template>
-  <el-tiptap @onCreate="onCreate" />
+    <el-tiptap @onCreate="onCreate" />
 </template>
 
 <script setup>
@@ -458,8 +434,8 @@ Welcome contribution.
  * see https://tiptap.dev/api/editor
  */
 const onCreate = ({ editor }) => {
-  // ...
-};
+    // ...
+}
 </script>
 ```
 
@@ -470,7 +446,6 @@ The same as `onCreate`
 ## 🏗 Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
 
 ## 📄 License
 

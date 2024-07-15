@@ -1,3 +1,3 @@
-import TiptapListItem from '@tiptap/extension-list-item';
+import TiptapListItem from '@tiptap/extension-list-item'
 
-export default TiptapListItem;
+export default TiptapListItem

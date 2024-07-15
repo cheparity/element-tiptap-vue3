@@ -1,27 +1,27 @@
-import TiptapDocument from '@tiptap/extension-document';
-import Title from './title';
+import TiptapDocument from '@tiptap/extension-document'
+import Title from './title'
 
 export interface DocumentOptions {
-  title: boolean;
+    title: boolean
 }
 
 const Document = TiptapDocument.extend<DocumentOptions>({
-  addOptions() {
-    return {
-      title: false,
-    };
-  },
+    addOptions() {
+        return {
+            title: false,
+        }
+    },
 
-  content() {
-    return this.options.title ? 'title block+' : 'block+';
-  },
+    content() {
+        return this.options.title ? 'title block+' : 'block+'
+    },
 
-  addExtensions() {
-    if (this.options.title) {
-      return [Title];
-    }
-    return [];
-  },
-});
+    addExtensions() {
+        if (this.options.title) {
+            return [Title]
+        }
+        return []
+    },
+})
 
-export default Document;
+export default Document

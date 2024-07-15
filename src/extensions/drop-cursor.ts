@@ -1,3 +1,3 @@
-import DropCursor from '@tiptap/extension-dropcursor';
+import DropCursor from '@tiptap/extension-dropcursor'
 
-export default DropCursor;
+export default DropCursor

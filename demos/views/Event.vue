@@ -1,88 +1,88 @@
 <template>
-  <div class="el-tiptap-editor__wrapper">
-    <el-tiptap
-      :extensions="extensions"
-      :content="content"
-      placeholder="Write something ..."
-      @onCreate="onCreateEvent"
-      @onFocus="onFocusEvent"
-      @onBlur="onBlurEvent"
-      @onUpdate="onUpdateEvent"
-    />
-  </div>
+    <div class="el-tiptap-editor__wrapper">
+        <el-tiptap
+            :extensions="extensions"
+            :content="content"
+            placeholder="Write something ..."
+            @onCreate="onCreateEvent"
+            @onFocus="onFocusEvent"
+            @onBlur="onBlurEvent"
+            @onUpdate="onUpdateEvent"
+        />
+    </div>
 </template>
 
 <script setup>
 import {
-  Doc,
-  Text,
-  Paragraph,
-  Heading,
-  Bold,
-  Underline,
-  Italic,
-  Strike,
-  Blockquote,
-  CodeBlock,
-  Image,
-  BulletList,
-  OrderedList,
-  TaskList,
-  TextAlign,
-  Indent,
-  History,
-} from 'element-tiptap-vue3-fixed';
+    Doc,
+    Text,
+    Paragraph,
+    Heading,
+    Bold,
+    Underline,
+    Italic,
+    Strike,
+    Blockquote,
+    CodeBlock,
+    Image,
+    BulletList,
+    OrderedList,
+    TaskList,
+    TextAlign,
+    Indent,
+    History,
+} from 'element-tiptap-vue3-fixed'
 
-import { ElNotification } from 'element-plus';
+import { ElNotification } from 'element-plus'
 
 const extensions = [
-  Doc,
-  Text,
-  Paragraph,
-  Heading.configure({ level: 5 }),
-  Bold,
-  Underline,
-  Italic,
-  Strike,
-  Blockquote,
-  CodeBlock,
-  Image,
-  TextAlign,
-  BulletList,
-  OrderedList,
-  TaskList,
-  Indent,
-  History,
-];
+    Doc,
+    Text,
+    Paragraph,
+    Heading.configure({ level: 5 }),
+    Bold,
+    Underline,
+    Italic,
+    Strike,
+    Blockquote,
+    CodeBlock,
+    Image,
+    TextAlign,
+    BulletList,
+    OrderedList,
+    TaskList,
+    Indent,
+    History,
+]
 
 const content =
-  '<p><img src="https://i.ibb.co/4pJs2Lx/undraw-static-assets-rpm6.png" width="300"></p><p>Open <strong>Console</strong>, your action on the editor will be logged.</p>';
+    '<p><img src="https://i.ibb.co/4pJs2Lx/undraw-static-assets-rpm6.png" width="300"></p><p>Open <strong>Console</strong>, your action on the editor will be logged.</p>'
 
 const onCreateEvent = () => {
-  ElNotification.info({
-    title: 'Editor Event',
-    message: '🔥create',
-  });
-};
+    ElNotification.info({
+        title: 'Editor Event',
+        message: '🔥create',
+    })
+}
 
 const onFocusEvent = () => {
-  ElNotification.info({
-    title: 'Editor Event',
-    message: '🔥focus',
-  });
-};
+    ElNotification.info({
+        title: 'Editor Event',
+        message: '🔥focus',
+    })
+}
 
 const onBlurEvent = () => {
-  ElNotification.info({
-    title: 'Editor Event',
-    message: '🔥blur',
-  });
-};
+    ElNotification.info({
+        title: 'Editor Event',
+        message: '🔥blur',
+    })
+}
 
 const onUpdateEvent = () => {
-  ElNotification.info({
-    title: 'Editor Event',
-    message: '🔥update',
-  });
-};
+    ElNotification.info({
+        title: 'Editor Event',
+        message: '🔥update',
+    })
+}
 </script>

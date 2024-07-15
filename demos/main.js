@@ -1,29 +1,29 @@
-import { createApp } from 'vue';
+import { createApp } from 'vue'
 import {
-  // layout
-  ElContainer,
-  ElHeader,
-  ElMain,
-  ElFooter,
-  ElButton,
-  ElTag
-} from 'element-plus';
+    // layout
+    ElContainer,
+    ElHeader,
+    ElMain,
+    ElFooter,
+    ElButton,
+    ElTag,
+} from 'element-plus'
 
-import ElementTiptap from 'element-tiptap-vue3-fixed';
-import App from './App.vue';
-import router from './router';
+import ElementTiptap from 'element-tiptap-vue3-fixed'
+import App from './App.vue'
+import router from './router'
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.use(router);
+app.use(router)
 
-app.use(ElContainer);
-app.use(ElHeader);
-app.use(ElMain);
-app.use(ElFooter);
-app.use(ElButton);
-app.use(ElTag);
+app.use(ElContainer)
+app.use(ElHeader)
+app.use(ElMain)
+app.use(ElFooter)
+app.use(ElButton)
+app.use(ElTag)
 
-app.use(ElementTiptap);
+app.use(ElementTiptap)
 
-app.mount('#app');
+app.mount('#app')

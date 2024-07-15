@@ -1,128 +1,113 @@
 <template>
-  <div>
-    <command-button
-      :command="openEditLinkDialog"
-      :enable-tooltip="enableTooltip"
-      :tooltip="t('editor.extensions.Link.edit.tooltip')"
-      icon="edit"
-      :button-icon="buttonIcon"
-    />
+    <div>
+        <command-button
+            :command="openEditLinkDialog"
+            :enable-tooltip="enableTooltip"
+            :tooltip="t('editor.extensions.Link.edit.tooltip')"
+            icon="edit"
+            :button-icon="buttonIcon"
+        />
 
-    <el-dialog
-      :title="t('editor.extensions.Link.edit.control.title')"
-      v-model="editLinkDialogVisible"
-      :append-to-body="true"
-      width="400px"
-      class="el-tiptap-edit-link-dialog"
-    >
-      <el-form :model="linkAttrs" label-position="right" size="small">
-        <el-form-item
-          :label="t('editor.extensions.Link.edit.control.href')"
-          prop="href"
+        <el-dialog
+            :title="t('editor.extensions.Link.edit.control.title')"
+            v-model="editLinkDialogVisible"
+            :append-to-body="true"
+            width="400px"
+            class="el-tiptap-edit-link-dialog"
         >
-          <el-input v-model="linkAttrs.href" autocomplete="off" :placeholder="placeholder" />
-        </el-form-item>
+            <el-form :model="linkAttrs" label-position="right" size="small">
+                <el-form-item :label="t('editor.extensions.Link.edit.control.href')" prop="href">
+                    <el-input v-model="linkAttrs.href" autocomplete="off" :placeholder="placeholder" />
+                </el-form-item>
 
-        <el-form-item prop="openInNewTab">
-          <el-checkbox v-model="linkAttrs.openInNewTab">
-            {{ t('editor.extensions.Link.edit.control.open_in_new_tab') }}
-          </el-checkbox>
-        </el-form-item>
-      </el-form>
+                <el-form-item prop="openInNewTab">
+                    <el-checkbox v-model="linkAttrs.openInNewTab">
+                        {{ t('editor.extensions.Link.edit.control.open_in_new_tab') }}
+                    </el-checkbox>
+                </el-form-item>
+            </el-form>
 
-      <template #footer>
-        <el-button size="small" round @click="closeEditLinkDialog">
-          {{ t('editor.extensions.Link.edit.control.cancel') }}
-        </el-button>
+            <template #footer>
+                <el-button size="small" round @click="closeEditLinkDialog">
+                    {{ t('editor.extensions.Link.edit.control.cancel') }}
+                </el-button>
 
-        <el-button
-          type="primary"
-          size="small"
-          round
-          @mousedown.prevent
-          @click="updateLinkAttrs"
-        >
-          {{ t('editor.extensions.Link.edit.control.confirm') }}
-        </el-button>
-      </template>
-    </el-dialog>
-  </div>
+                <el-button type="primary" size="small" round @mousedown.prevent @click="updateLinkAttrs">
+                    {{ t('editor.extensions.Link.edit.control.confirm') }}
+                </el-button>
+            </template>
+        </el-dialog>
+    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
-import { Editor } from '@tiptap/vue-3';
-import {
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElCheckbox,
-  ElButton,
-} from 'element-plus';
-import CommandButton from '../CommandButton.vue';
+import { defineComponent, inject } from 'vue'
+import { Editor } from '@tiptap/vue-3'
+import { ElDialog, ElForm, ElFormItem, ElInput, ElCheckbox, ElButton } from 'element-plus'
+import CommandButton from '../CommandButton.vue'
 
 export default defineComponent({
-  name: 'EditLinkCommandButton',
+    name: 'EditLinkCommandButton',
 
-  components: {
-    ElDialog,
-    ElForm,
-    ElFormItem,
-    ElInput,
-    ElCheckbox,
-    ElButton,
-    CommandButton,
-  },
-
-  props: {
-    editor: {
-      type: Editor,
-      required: true,
+    components: {
+        ElDialog,
+        ElForm,
+        ElFormItem,
+        ElInput,
+        ElCheckbox,
+        ElButton,
+        CommandButton,
     },
 
-    initLinkAttrs: {
-      type: Object,
-      required: true,
-    },
-    buttonIcon: {
-      default: '',
-      type: String
-    }
-  },
+    props: {
+        editor: {
+            type: Editor,
+            required: true,
+        },
 
-  setup() {
-    const t = inject('t');
-    const enableTooltip = inject('enableTooltip', true);
-
-    return { t, enableTooltip };
-  },
-
-  data() {
-    return {
-      linkAttrs: this.initLinkAttrs,
-      editLinkDialogVisible: false,
-    };
-  },
-  computed: {
-    placeholder() {
-      return this.editor.extensionManager.extensions.find(item => item.name === 'link')?.options?.editLinkPlaceholder;
-    }
-  },
-  methods: {
-    updateLinkAttrs() {
-      this.editor.commands.setLink(this.linkAttrs);
-
-      this.closeEditLinkDialog();
+        initLinkAttrs: {
+            type: Object,
+            required: true,
+        },
+        buttonIcon: {
+            default: '',
+            type: String,
+        },
     },
 
-    openEditLinkDialog() {
-      this.editLinkDialogVisible = true;
+    setup() {
+        const t = inject('t')
+        const enableTooltip = inject('enableTooltip', true)
+
+        return { t, enableTooltip }
     },
 
-    closeEditLinkDialog() {
-      this.editLinkDialogVisible = false;
+    data() {
+        return {
+            linkAttrs: this.initLinkAttrs,
+            editLinkDialogVisible: false,
+        }
     },
-  },
-});
+    computed: {
+        placeholder() {
+            return this.editor.extensionManager.extensions.find((item) => item.name === 'link')?.options
+                ?.editLinkPlaceholder
+        },
+    },
+    methods: {
+        updateLinkAttrs() {
+            this.editor.commands.setLink(this.linkAttrs)
+
+            this.closeEditLinkDialog()
+        },
+
+        openEditLinkDialog() {
+            this.editLinkDialogVisible = true
+        },
+
+        closeEditLinkDialog() {
+            this.editLinkDialogVisible = false
+        },
+    },
+})
 </script>

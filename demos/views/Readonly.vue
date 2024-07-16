@@ -39,5 +39,5 @@ const extensions = [
     History,
 ]
 
-const content = "<p>I' m non-editable now. 😰</p><p></p><p>pass prop <code>readonly: true</code> to the editor.</p>"
+const content = "<p>I' m non-editable now. 😰</p><p></p><p>pass props <code>readonly: true</code> to the editor.</p>"
 </script>

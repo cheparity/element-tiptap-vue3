@@ -13,7 +13,7 @@
     >
         <div>
             <MenuLeftSidebar/>
-            <MenuRightSidebar/>
+           <MenuRightSidebar :editor="editor"/>
         </div>
         <div>
             <menu-bubble :editor="editor" :class="editorBubbleMenuClass" />
@@ -297,7 +297,7 @@ export default defineComponent({
         const showFooter = computed(() => {
             return props.enableCharCount && !unref(isCodeViewMode)
         })
-        // Reactive prop content
+        // Reactive props content
         function setContent(value: any) {
             if (editor.value) {
                 editor.value.commands.setContent(value)

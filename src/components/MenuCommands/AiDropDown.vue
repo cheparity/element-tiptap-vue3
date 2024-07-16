@@ -42,7 +42,7 @@ import {
 } from '@element-plus/icons-vue'
 import api from '@/api'
 
-const prop = defineProps({
+const props = defineProps({
     editor: {
         type: Editor,
         required: true
@@ -61,7 +61,7 @@ const dialogVisible = ref(false)
 const dialogLoading = ref(false)
 const fullDialogContent = ref('')
 const getSelectedContent = (): string => {
-    const state = prop.editor.state
+    const state = props.editor.state
     if (state) {
         const { selection } = state
         const text = state.doc.textBetween(selection.from, selection.to, '')
@@ -104,7 +104,7 @@ function handleCommand(command: string) {
                 // 现在是原先的效果
                 // 原先是复制，但是我们现在可以稍作修改，直接插入
                 updateDialogContent(ret)
-                // prop.editor.commands.insertContent(ret)
+                // props.editor.commands.insertContent(ret)
             })
             break
         case 'polish':
@@ -125,7 +125,7 @@ function handleCommand(command: string) {
                 updateDialogContent(ret)
             })
 
-            // prop.editor.commands.insertContent('This is polish')
+            // props.editor.commands.insertContent('This is polish')
             break
         case 'correct':
             showLoadingDialog()
@@ -135,7 +135,7 @@ function handleCommand(command: string) {
                 updateDialogContent(ret)
             })
 
-            // prop.editor.commands.insertContent('This is polish')
+            // props.editor.commands.insertContent('This is polish')
             break
         case 'continuation':
             showLoadingDialog()
@@ -145,7 +145,7 @@ function handleCommand(command: string) {
                 updateDialogContent(ret)
             })
 
-            // prop.editor.commands.continuation()
+            // props.editor.commands.continuation()
             break
         default:
             console.log(`Unknown command: ${command}`)

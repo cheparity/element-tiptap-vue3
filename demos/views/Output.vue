@@ -58,7 +58,7 @@ const extensions = [
     History,
 ]
 
-const content = ref('<p>The <code>output</code> prop: <strong>HTML or JSON</strong></p>')
+const content = ref('<p>The <code>output</code> props: <strong>HTML or JSON</strong></p>')
 
 const output = ref({
     json: 'Update content to see changes',

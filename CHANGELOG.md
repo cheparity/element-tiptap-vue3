@@ -7,7 +7,7 @@
 
 ### Features
 
--   add `tooltip` prop, enable to hide tooltip ([4d1aa2f](https://github.com/Leecason/element-tiptap/commit/4d1aa2f6dd75601cdacff48d9d554dbd87cde4f0))
+-   add `tooltip` props, enable to hide tooltip ([4d1aa2f](https://github.com/Leecason/element-tiptap/commit/4d1aa2f6dd75601cdacff48d9d554dbd87cde4f0))
 -   build library and demo site with vite, remove rollup config ([f6bf8f2](https://github.com/Leecason/element-tiptap/commit/f6bf8f2082a2c867e91f80953c0905a9f916aa51))
 
 ## [1.27.1](https://github.com/Leecason/element-tiptap/compare/@1.27.0...@1.27.1) (2021-12-17)
@@ -77,9 +77,9 @@
 
 -   ✨ add `defaultWidth`, `defaultDisplay` options for `Image` extension ([64bc1b6](https://github.com/Leecason/element-tiptap/commit/64bc1b66506b8bb0eb39e7c69d2656ecd4041d91))
 -   ✨ add `editorClass`, `editorContentClass`, `editorMenubarClass`, `editorBubbleMenuClass`, `editorFooterClass` props (https://github.com/Leecason/element-tiptap/pull/133) ([d43d61e](https://github.com/Leecason/element-tiptap/commit/d43d61e983318e778c7fdd78feda90e8b6509309))
--   ✨ add `lang` prop to support config editor i18n language locally (https://github.com/Leecason/element-tiptap/issues/62) ([e28b6bd](https://github.com/Leecason/element-tiptap/commit/e28b6bd25be8cb46b4def700fa10b8eeb8438e80))
+-   ✨ add `lang` props to support config editor i18n language locally (https://github.com/Leecason/element-tiptap/issues/62) ([e28b6bd](https://github.com/Leecason/element-tiptap/commit/e28b6bd25be8cb46b4def700fa10b8eeb8438e80))
 -   ✨ add `openInNewTab` option to `Link` extension, default to `true` ([f66ff5e](https://github.com/Leecason/element-tiptap/commit/f66ff5e3970766200e0fa1227b893b2a6f506850))
--   ✨ add `tooltip` prop to enable/disable tooltip (https://github.com/Leecason/element-tiptap/issues/121) ([08db78e](https://github.com/Leecason/element-tiptap/commit/08db78efa025e6d573b4df537be980767be17547))
+-   ✨ add `tooltip` props to enable/disable tooltip (https://github.com/Leecason/element-tiptap/issues/121) ([08db78e](https://github.com/Leecason/element-tiptap/commit/08db78efa025e6d573b4df537be980767be17547))
 -   ✨ Add new language `zh-tw` ([be52f57](https://github.com/Leecason/element-tiptap/commit/be52f57f61de96a2378c23a8e0d0394c059387f0))
 -   ✨ default export `ElementTiptapPlugin` ([bf1726f](https://github.com/Leecason/element-tiptap/commit/bf1726f68481a6e434e2da2af2b62318943a6bbb))
 -   ✨ enable back to default menu in link bubble menu (https://github.com/Leecason/element-tiptap/issues/117) ([1805987](https://github.com/Leecason/element-tiptap/commit/1805987c9471765e2e015a15c7a74e393395d2a9))
@@ -88,7 +88,7 @@
 
 ### Bug Fixes
 
--   🐛 add menuBubbleOptions prop to temporary fix bubble menu cut-off (https://github.com/Leecason/element-tiptap/issues/118) ([aec41ea](https://github.com/Leecason/element-tiptap/commit/aec41ea7d1ef894a8a4c8943873d76d7dfabfbec))
+-   🐛 add menuBubbleOptions props to temporary fix bubble menu cut-off (https://github.com/Leecason/element-tiptap/issues/118) ([aec41ea](https://github.com/Leecason/element-tiptap/commit/aec41ea7d1ef894a8a4c8943873d76d7dfabfbec))
 -   update i18n/ru locale ([cb364b8](https://github.com/Leecason/element-tiptap/commit/cb364b8b05ad53c8433576223bf844219ef76c16))
 
 ## [1.24.4](https://github.com/Leecason/element-tiptap/compare/@1.24.3...@1.24.4) (2020-06-27)
@@ -183,7 +183,7 @@
 
 ### Features
 
--   ✨ change prop editorProps to editorProperties (https://github.com/Leecason/element-tiptap/issues/47) ([66374dd](https://github.com/Leecason/element-tiptap/commit/66374ddf3b9590adef9bab4e6c03751f3743a658))
+-   ✨ change props editorProps to editorProperties (https://github.com/Leecason/element-tiptap/issues/47) ([66374dd](https://github.com/Leecason/element-tiptap/commit/66374ddf3b9590adef9bab4e6c03751f3743a658))
 
 # [1.18.0](https://github.com/Leecason/element-tiptap/compare/@1.17.2...@1.18.0) (2020-04-02)
 
@@ -211,7 +211,7 @@
 
 ### Features
 
--   **editor:** ✨ a new prop: editorProps, enable customize editor for yourself with it ([532e8a3](https://github.com/Leecason/element-tiptap/commit/532e8a34efdd69625c4615b310714a395c9334c9))
+-   **editor:** ✨ a new props: editorProps, enable customize editor for yourself with it ([532e8a3](https://github.com/Leecason/element-tiptap/commit/532e8a34efdd69625c4615b310714a395c9334c9))
 -   **editor:** ✨ add editor props: width, height (https://github.com/Leecason/element-tiptap/issues/23) ([1290fb0](https://github.com/Leecason/element-tiptap/commit/1290fb0f03da90297f58f4a708360e4656bdc64a))
 -   **image:** ✨ add image bubble menu, enable edit image alt, width, height ([9791533](https://github.com/Leecason/element-tiptap/commit/9791533931532bf3a4ff9299d4b7e263afffe590))
 -   **image:** ✨ enable update imgae display: float_left and float_right ([3adf51b](https://github.com/Leecason/element-tiptap/commit/3adf51b62d33982da0aafb582fe29cdc6bec69f7))
@@ -423,7 +423,7 @@
 -   add TextHighlight extension ([715790e](https://github.com/Leecason/element-tiptap/commit/715790e67e8b1d9637253e070d827be37a5c9bb8))
 -   autoInstall function for CDN usage ([b044ce6](https://github.com/Leecason/element-tiptap/commit/b044ce6ee265517fcb8d30f054d18de47c573706))
 -   enable cleart color in colorPopover ([62675d8](https://github.com/Leecason/element-tiptap/commit/62675d89743a67156992f732f5ab5699d85c9bda))
--   **editor:** add el-tiptap readonly prop ([9949163](https://github.com/Leecason/element-tiptap/commit/994916363931b49b9bded69e9dae2f3eb7268425))
+-   **editor:** add el-tiptap readonly props ([9949163](https://github.com/Leecason/element-tiptap/commit/994916363931b49b9bded69e9dae2f3eb7268425))
 -   **style:** add command button style file ([1f66c25](https://github.com/Leecason/element-tiptap/commit/1f66c2539b682b8e63ac9bc0d3865ee94aadc409))
 -   **style:** extract editor menu style ([d21c89d](https://github.com/Leecason/element-tiptap/commit/d21c89d9f2d718ecb8e8618b7d95665a65cee95f))
 -   refactor lineHeight extension, change default line_heights options, todo_list support textAlign and lineHeight ([dbac82c](https://github.com/Leecason/element-tiptap/commit/dbac82c149c8fff9e73ce659f5c4d3ad703e16a8))
@@ -511,9 +511,9 @@
 
 -   ✨ apply link ([b3d3295](https://github.com/Leecason/element-tiptap/commit/b3d32956ca4976f3d6a2b9ecefdde3de43c6d40c))
 -   ✨ base example route ([1b1a49d](https://github.com/Leecason/element-tiptap/commit/1b1a49de383d455e32e583355dde4b517c32f41c))
--   ✨ editor content prop ([de9585d](https://github.com/Leecason/element-tiptap/commit/de9585d4f4bbd0bb94bab711851e300eb5201b55))
+-   ✨ editor content props ([de9585d](https://github.com/Leecason/element-tiptap/commit/de9585d4f4bbd0bb94bab711851e300eb5201b55))
 -   ✨ editor placeholder ([6165a58](https://github.com/Leecason/element-tiptap/commit/6165a58fcfa3a89a0d548731e97cfd29becd7f16))
--   ✨ editor placeholder prop ([a092923](https://github.com/Leecason/element-tiptap/commit/a0929238b7d6cb2a2bc55de2acb51e76e9a8cc37))
+-   ✨ editor placeholder props ([a092923](https://github.com/Leecason/element-tiptap/commit/a0929238b7d6cb2a2bc55de2acb51e76e9a8cc37))
 -   ✨ emit events ([0444b44](https://github.com/Leecason/element-tiptap/commit/0444b44f6f9dfa3d6ea949af1ef5ed95ef4c319b))
 -   ✨ emit events and support v-model ([71d37a3](https://github.com/Leecason/element-tiptap/commit/71d37a33692f27f7d4203f20dad94eb1ed9c883c))
 -   ✨ event route ([d76b404](https://github.com/Leecason/element-tiptap/commit/d76b404d71ef6e9e3719fcc353e671c180f3d60a))
@@ -523,7 +523,7 @@
 -   ✨ line_height extension ([eb467e1](https://github.com/Leecason/element-tiptap/commit/eb467e1707e9ca9039e589f0b9d6c26243b43e21))
 -   ✨ menu bubble ([40c2bd6](https://github.com/Leecason/element-tiptap/commit/40c2bd620f8293af994f49decd9d5d6d48606d45))
 -   ✨ menu bubble route ([0bcc936](https://github.com/Leecason/element-tiptap/commit/0bcc93646a15c709191589597c0c14db321afd81))
--   ✨ output prop ([2f7cad5](https://github.com/Leecason/element-tiptap/commit/2f7cad5c78f531aeae7208294ce2944239e35e2a))
+-   ✨ output props ([2f7cad5](https://github.com/Leecason/element-tiptap/commit/2f7cad5c78f531aeae7208294ce2944239e35e2a))
 -   ✨ output route ([550fe2c](https://github.com/Leecason/element-tiptap/commit/550fe2cc554844ec40c8efc760f51ac369d494e2))
 -   ✨ page style, add github link ([9f32208](https://github.com/Leecason/element-tiptap/commit/9f32208aaaa7b6fe84176862c44624f32aad3562))
 -   ✨ support custom necessary alignments ([2807f2d](https://github.com/Leecason/element-tiptap/commit/2807f2da66800b10d8bc15b034301b413e06166e))

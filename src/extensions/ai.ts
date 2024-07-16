@@ -1,6 +1,4 @@
 import { Editor, Extension } from '@tiptap/core'
-import { getMarkAttributes } from '@tiptap/vue-3'
-import { DEFAULT_FONT_FAMILY_MAP } from '@/utils/font-type'
 import AiDropDown from '@/components/MenuCommands/AiDropDown.vue'
 import TextStyle from '@tiptap/extension-text-style'
 
@@ -10,15 +8,27 @@ export type AiOptions = {
 
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {
-        fontFamily: {
+        ai: {
             /**
-             * Set the font family
+             * Summarize text
              */
-            setFontFamily: (fontFamily: string) => ReturnType
+            summarize: () => ReturnType
             /**
-             * Unset the font family
+             * Polish text
              */
-            unsetFontFamily: () => ReturnType
+            polish: () => ReturnType
+            /**
+             * Translate text
+             */
+            translate: () => ReturnType
+            /**
+             * Correct text
+             */
+            correct: () => ReturnType
+            /**
+             * Continue text
+             */
+            continuation: () => ReturnType
         }
     }
 }
@@ -29,24 +39,49 @@ const Ai = Extension.create<AiOptions>({
     addOptions() {
         return {
             types: ['textStyle'],
-            fontFamilyMap: DEFAULT_FONT_FAMILY_MAP,
             buttonIcon: '',
-            commandList: Object.keys(DEFAULT_FONT_FAMILY_MAP).map((key) => {
-                return {
-                    title: `fontFamily ${key}`,
+            commandList: [
+                {
+                    title: 'Summarize',
                     command: ({ editor, range }: any) => {
-                        if (key === getMarkAttributes(editor.state, 'textStyle').fontFamily || '') {
-                            editor.chain().focus().deleteRange(range).unsetFontFamily().run()
-                        } else {
-                            editor.chain().focus().deleteRange(range).setFontFamily(key).run()
-                        }
+                        editor.chain().focus().deleteRange(range).summarize().run()
                     },
                     disabled: false,
-                    isActive(editor: Editor) {
-                        return key === getMarkAttributes(editor.state, 'textStyle').fontFamily || ''
+                    isActive: () => false,
+                },
+                {
+                    title: 'Polish',
+                    command: ({ editor, range }: any) => {
+                        editor.chain().focus().deleteRange(range).polish().run()
                     },
-                }
-            }),
+                    disabled: false,
+                    isActive: () => false,
+                },
+                {
+                    title: 'Translate',
+                    command: ({ editor, range }: any) => {
+                        editor.chain().focus().deleteRange(range).translate().run()
+                    },
+                    disabled: false,
+                    isActive: () => false,
+                },
+                {
+                    title: 'Correct',
+                    command: ({ editor, range }: any) => {
+                        editor.chain().focus().deleteRange(range).correct().run()
+                    },
+                    disabled: false,
+                    isActive: () => false,
+                },
+                {
+                    title: 'Continuation',
+                    command: ({ editor, range }: any) => {
+                        editor.chain().focus().deleteRange(range).continuation().run()
+                    },
+                    disabled: false,
+                    isActive: () => false,
+                },
+            ],
             button({ editor, extension }: { editor: Editor; extension: any; t: (...args: any[]) => string }) {
                 return {
                     component: AiDropDown,
@@ -59,21 +94,65 @@ const Ai = Extension.create<AiOptions>({
         }
     },
 
+    addCommands() {
+        return {
+            summarize:
+                () =>
+                    ({ chain }) => {
+                        // TODO call the summarize function
+                        console.log('Summarize function called')
+                        return chain().run()
+                    },
+
+            polish:
+                () =>
+                    ({ chain }) => {
+                        // TODO call the polish function
+                        console.log('Polish function called')
+                        return chain().run()
+                    },
+
+            translate:
+                () =>
+                    ({ chain }) => {
+                        // TODO call the translate function
+                        console.log('Translate function called')
+                        return chain().run()
+                    },
+
+            correct:
+                () =>
+                    ({ chain }) => {
+                        // TODO call the correct function
+                        console.log('Correct function called')
+                        return chain().run()
+                    },
+
+            continuation:
+                () =>
+                    ({ chain }) => {
+                        // TODO call the continuation function
+                        console.log('Continuation function called')
+                        return chain().run()
+                    },
+        }
+    },
+
     addGlobalAttributes() {
         return [
             {
                 types: this.options.types,
                 attributes: {
-                    fontFamily: {
+                    aiCommand: {
                         default: null,
-                        parseHTML: (element) => element.style.fontFamily.replace(/['"]/g, ''),
+                        parseHTML: (element) => element.getAttribute('data-ai-command') || '',
                         renderHTML: (attributes) => {
-                            if (!attributes.fontFamily) {
+                            if (!attributes.aiCommand) {
                                 return {}
                             }
 
                             return {
-                                style: `font-family: ${attributes.fontFamily}`,
+                                'data-ai-command': attributes.aiCommand,
                             }
                         },
                     },
@@ -82,22 +161,9 @@ const Ai = Extension.create<AiOptions>({
         ]
     },
 
-    addCommands() {
-        return {
-            setFontFamily:
-                (fontFamily) =>
-                    ({ chain }) => {
-                        return chain().setMark('textStyle', { fontFamily }).run()
-                    },
-
-            unsetFontFamily:
-                () =>
-                    ({ chain }) => {
-                        return chain().setMark('textStyle', { fontFamily: null }).removeEmptyTextStyle().run()
-                    },
-        }
+    addExtensions() {
+        return [TextStyle]
     },
-    nessesaryExtensions: [TextStyle],
-}).extend({})
+})
 
 export default Ai

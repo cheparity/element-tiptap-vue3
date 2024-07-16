@@ -128,7 +128,7 @@ export default defineComponent({
         },
         spellcheck: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         readonly: {
             type: Boolean,

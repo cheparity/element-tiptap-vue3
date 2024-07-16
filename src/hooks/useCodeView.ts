@@ -30,7 +30,7 @@ export default function useCodeView(editor: ShallowRef<Editor | undefined>) {
                 const cmOptions = {
                     ...codemirrorOptions,
                     readOnly: false,
-                    spellcheck: false,
+                    spellcheck: true,
                     // readOnly: this.readonly,
                     // spellcheck: this.spellcheckEnabled,
                 }

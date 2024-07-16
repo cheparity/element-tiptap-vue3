@@ -1,6 +1,9 @@
 export default {
     editor: {
         extensions: {
+            Ai: {
+                tooltip: '使用大模型',
+            },
             Bold: {
                 tooltip: '粗体',
             },

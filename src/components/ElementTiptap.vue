@@ -12,6 +12,10 @@
         ]"
     >
         <div>
+            <MenuLeftSidebar/>
+            <MenuRightSidebar/>
+        </div>
+        <div>
             <menu-bubble :editor="editor" :class="editorBubbleMenuClass" />
         </div>
         <div>
@@ -62,6 +66,8 @@ import { Trans } from '@/i18n'
 import { useCodeView, useCharacterCount, useEditorStyle } from '@/hooks'
 import MenuBar from './MenuBar/index.vue'
 import MenuBubble from './MenuBubble/index.vue'
+import MenuRightSidebar from '@/components/MenuSidebar/MenuRightSidebar.vue'
+import MenuLeftSidebar from '@/components/MenuSidebar/MenuLeftSidebar.vue'
 
 interface Props {
     extensions: Extensions
@@ -89,6 +95,8 @@ export default defineComponent({
     name: 'ElementTiptap',
 
     components: {
+        MenuLeftSidebar,
+        MenuRightSidebar,
         EditorContent,
         MenuBar,
         MenuBubble,

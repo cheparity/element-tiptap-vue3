@@ -11,9 +11,9 @@
             editorClass,
         ]"
     >
-<!--        <div>-->
-<!--            <menu-bubble :editor="editor" :class="editorBubbleMenuClass" />-->
-<!--        </div>-->
+        <div>
+            <menu-bubble :editor="editor" :class="editorBubbleMenuClass" />
+        </div>
         <div>
             <menu-bar :editor="editor" :class="editorMenubarClass" />
         </div>

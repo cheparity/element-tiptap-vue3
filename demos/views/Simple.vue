@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
     Doc,
     Text,
@@ -29,6 +29,7 @@ import {
     CodeView,
     Fullscreen,
     History,
+    AiContext
 } from 'element-tiptap-vue3-fixed'
 
 import codemirror from 'codemirror'
@@ -36,8 +37,11 @@ import 'codemirror/lib/codemirror.css' // import base style
 import 'codemirror/mode/xml/xml.js' // language
 import 'codemirror/addon/selection/active-line.js' // require active-line.js
 import 'codemirror/addon/edit/closetag.js' // autoCloseTags
-
+onMounted(() => {
+    console.log('mounted', AiContext)
+})
 const extensions = [
+    AiContext.configure({bubble: true}),
     Doc,
     Text,
     Paragraph,

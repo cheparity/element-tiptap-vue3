@@ -10736,6 +10736,11 @@ util@0.10.3:
   dependencies:
     inherits "2.0.1"
 
+uuid@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-10.0.0.tgz"
+  integrity sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==
+
 uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"

@@ -60,17 +60,12 @@ export default {
     // 语音识别
     voiceRecognize: async function (params: object) {
         // 检查登陆状态
-        if (!localStorage.getItem('token')) {
-            ElMessage.error('请先登录')
-            return
-        }
+        // if (!localStorage.getItem('token')) {
+        //     ElMessage.error('请先登录')
+        //     return
+        // }
 
-        return await api.post(`ai/speeches/recognize/`, params, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        })
+        return await api.post(`ai/speeches/recognize/`, params)
     },
     // 图片目标检测
     objectDetect: async function (params: object) {

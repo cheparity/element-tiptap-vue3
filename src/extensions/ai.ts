@@ -98,43 +98,43 @@ const Ai = Extension.create<AiOptions>({
         return {
             summarize:
                 () =>
-                    ({ chain }) => {
-                        // TODO call the summarize function
-                        console.log('Summarize function called')
-                        return chain().run()
-                    },
+                ({ chain }) => {
+                    // TODO call the summarize function
+                    console.log('Summarize function called')
+                    return chain().run()
+                },
 
             polish:
                 () =>
-                    ({ chain }) => {
-                        // TODO call the polish function
-                        console.log('Polish function called')
-                        return chain().run()
-                    },
+                ({ chain }) => {
+                    // TODO call the polish function
+                    console.log('Polish function called')
+                    return chain().run()
+                },
 
             translate:
                 () =>
-                    ({ chain }) => {
-                        // TODO call the translate function
-                        console.log('Translate function called')
-                        return chain().run()
-                    },
+                ({ chain }) => {
+                    // TODO call the translate function
+                    console.log('Translate function called')
+                    return chain().run()
+                },
 
             correct:
                 () =>
-                    ({ chain }) => {
-                        // TODO call the correct function
-                        console.log('Correct function called')
-                        return chain().run()
-                    },
+                ({ chain }) => {
+                    // TODO call the correct function
+                    console.log('Correct function called')
+                    return chain().run()
+                },
 
             continuation:
                 () =>
-                    ({ chain }) => {
-                        // TODO call the continuation function
-                        console.log('Continuation function called')
-                        return chain().run()
-                    },
+                ({ chain }) => {
+                    // TODO call the continuation function
+                    console.log('Continuation function called')
+                    return chain().run()
+                },
         }
     },
 

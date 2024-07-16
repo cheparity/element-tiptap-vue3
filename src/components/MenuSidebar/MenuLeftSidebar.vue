@@ -21,7 +21,10 @@ const treeData = ref([
     {
         id: 1,
         label: '2023/9/15',
-        children: [{ id: 2, label: '项目结构' }, { id: 3, label: '总体思路' }]
+        children: [
+            { id: 2, label: '项目结构' },
+            { id: 3, label: '总体思路' },
+        ],
     },
     {
         id: 4,
@@ -29,18 +32,18 @@ const treeData = ref([
         children: [
             { id: 5, label: '难点' },
             { id: 6, label: '思路（一）' },
-            { id: 7, label: '思路（二）' }
-        ]
+            { id: 7, label: '思路（二）' },
+        ],
     },
     {
         id: 8,
         label: '2023/9/20',
-        children: [{ id: 9, label: '重新架构思路' }]
-    }
+        children: [{ id: 9, label: '重新架构思路' }],
+    },
 ])
 const defaultProps = ref({
     label: 'label',
-    children: 'children'
+    children: 'children',
 })
 
 const defaultExpandedKeys = ref([])
@@ -55,7 +58,7 @@ const closeSidebar = () => {
 
 onMounted(() => {
     // 设置默认展开为二级标题
-    treeData.value.forEach(item => {
+    treeData.value.forEach((item) => {
         if (item.children) {
             defaultExpandedKeys.value.push(item.id)
         }
@@ -71,7 +74,7 @@ onMounted(() => {
     .trigger-area {
         position: fixed;
         left: -10px;
-        width: 20%;
+        width: 10px;
         height: 300px; /* Adjust this value to your preferred size */
         top: 50%;
         transform: translateY(-50%);

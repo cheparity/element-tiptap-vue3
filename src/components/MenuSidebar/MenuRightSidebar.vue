@@ -146,7 +146,7 @@ onMounted(() => {
     .trigger-area {
         position: fixed;
         right: -10px;
-        width: 20%;
+        width: 10px;
         height: 300px; /* Adjust this value to your preferred size */
         top: 50%;
         transform: translateY(-50%);

@@ -21,9 +21,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElUpload } from 'element-plus'
 import api from '@/api'
 import { Editor } from '@tiptap/vue-3'
+import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps<{
     onUpdate?: (result: string) => void
@@ -35,6 +36,9 @@ const isUploaded = ref(false)
 const recognitionResult = ref('')
 
 const uploadFile = async (request: any) => {
+    console.log('request', request)
+    const uu_id = uuidv4()
+    localStorage.setItem(uu_id, JSON.stringify(request))
     try {
         const file = request.file
         console.log('Uploading file:', file)
@@ -44,6 +48,7 @@ const uploadFile = async (request: any) => {
             file_format: 'pcm',
             dev_pid: '1537',
             speech: pureBase64,
+            uuid: uu_id,
         })
         handleSuccess(result)
     } catch (error) {
@@ -114,7 +119,7 @@ const replaceNodeWithResult = (result: string) => {
     }
 
     .upload-demo {
-        border: 2px dashed #d9d9d9;
+        /* border: 2px dashed #d9d9d9; */
         border-radius: 10px;
         padding: 20px;
         text-align: center;

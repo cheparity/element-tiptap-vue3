@@ -2,7 +2,7 @@ export default {
     editor: {
         extensions: {
             Ai: {
-                tooltip: 'AiChat',
+                tooltip: 'Ai Options',
             },
             Bold: {
                 tooltip: 'Bold',

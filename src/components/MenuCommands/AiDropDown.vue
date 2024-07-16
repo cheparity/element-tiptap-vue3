@@ -28,6 +28,7 @@
         :fullContent="fullDialogContent"
         :loading="dialogLoading"
         @close="aiDialogVisible = false"
+        @accept="acceptResult"
     />
     <VoiceRecognition v-if="voiceRecognitionDialogVisible" :editor="editor" :content="voiceContent" />
 </template>
@@ -58,7 +59,10 @@ const props = defineProps({
 const t = inject('t')
 const enableTooltip = inject('enableTooltip', true)
 const isCodeViewMode = inject('isCodeViewMode', false)
-
+const acceptResult = (content: string) => {
+    console.log('接受了结果', content)
+    props.editor.commands.insertContent(content)
+}
 const aiDialogVisible = ref(false)
 const dialogLoading = ref(false)
 const fullDialogContent = ref('')

@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="dialog-footer">
-            <button @click="closeDialog" class="close-button">关闭</button>
+            <el-button @click="acceptResult">接受</el-button>
+            <el-button @click="closeDialog" color="#626aef" class="close-button">关闭</el-button>
         </div>
     </div>
 </template>
@@ -22,7 +23,7 @@ const props = defineProps({
     loading: Boolean,
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'accept'])
 
 const currentContent = ref('')
 let timer: number | null = null
@@ -46,11 +47,14 @@ const renderText = (text: string) => {
         }
     }, 50)
 }
-
+const acceptResult = () => {
+    // 获取当前文本
+    console.log('接受了结果', currentContent.value)
+    emit('accept', currentContent.value)
+}
 const closeDialog = () => {
     emit('close')
 }
-
 </script>
 
 <style scoped>

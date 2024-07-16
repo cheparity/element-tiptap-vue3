@@ -20,6 +20,7 @@
     ],
     "types": "./lib/index.d.ts",
     "dependencies": {
+        "axios": "^1.7.2",
         "@juggle/resize-observer": "^3.1.2",
         "@tiptap/core": "^2.0.3",
         "@tiptap/extension-blockquote": "^2.1.0",

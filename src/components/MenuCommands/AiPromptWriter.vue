@@ -1,53 +1,36 @@
 <template>
-    <div class="el-tiptap-editor__ai-image" v-show="showThis">
+    <div class="el-tiptap-editor__ai-text" v-show="showThis">
         <div style="margin-bottom: 15px">{{ t('editor.extensions.Ai.chat.prompt') }}</div>
         <!-- 加载框 -->
-        <el-skeleton v-if="clickedGenerate" :loading="loading" style="width: 240px; margin-bottom: 20px" animated>
+        <el-skeleton v-if="clickedGenerate" :loading="loading" style="width: 100%; margin-bottom: 20px" animated>
             <template #template>
-                <!-- <div v-if="loading" class="loading-container">
-                    <div class="loading-spinner"></div>
-                </div> -->
-                <!-- TODO 这一块显示不了 -->
-                <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
-                <div style="padding: 14px">
-                    <el-skeleton-item variant="h3" style="width: 50%" />
-                    <div
-                        style="
-                            display: flex;
-                            align-items: center;
-                            justify-items: space-between;
-                            margin-top: 16px;
-                            height: 16px;
-                        "
-                    >
-                        <el-skeleton-item variant="text" style="margin-right: 16px" />
-                        <el-skeleton-item variant="text" style="width: 30%" />
-                    </div>
-                </div>
+                <el-skeleton :rows="5" animated />
             </template>
             <template #default>
-                <el-card :body-style="{ padding: '0px', marginBottom: '1px' }">
-                    <img :src="resultUrl" class="image" />
-                </el-card>
+                <el-card :body-style="{ padding: '0px', marginBottom: '5px' }">{{ result }}</el-card>
             </template>
         </el-skeleton>
 
         <el-input
             type="textarea"
             v-model="prompt"
-            class="el-tiptap-editor__ai-image__input"
-            :placeholder="t('editor.extensions.Ai.chat.imageGen_prompt')"
+            class="el-tiptap-editor__ai-text__input"
+            :placeholder="t('editor.extensions.Ai.chat.promptWriting_prompt')"
         ></el-input>
 
         <div class="left-right">
-            <el-select v-model="selectedStyle" placeholder="Image style">
-                <el-option v-for="style in imageStyles" :key="style" :label="style" :value="style"></el-option>
+            <el-select v-model="selectedStyle" placeholder="Tone style">
+                <el-option v-for="style in textStyles" :key="style" :label="style" :value="style"></el-option>
             </el-select>
-            <el-button v-if="!clickedGenerate" round style="width: auto; margin-left: 100px" @click="generateImage"
-                >Generate image</el-button
+            <el-button v-if="!clickedGenerate" round style="width: auto; margin-left: 100px" @click="generateText"
+                >Generate Text</el-button
             >
-            <el-button v-else round style="width: auto; margin-left: 100px" @click="acceptImage"
-                >Accept image</el-button
+            <el-button
+                v-if="clickedGenerate && !loading"
+                round
+                style="width: auto; margin-left: 100px"
+                @click="acceptText"
+                >Accept Text</el-button
             >
         </div>
     </div>
@@ -68,33 +51,39 @@ const props = defineProps({
 })
 const t = inject('t')
 const prompt = ref('')
-const imageStyles = ref(['二次元', '写实风格', '古风', '赛博朋克', '水彩画', '油画', '卡通画'])
+const textStyles = ref(['二次元', '写实风格', '古风', '赛博朋克', '水彩画', '油画', '卡通画'])
 const selectedStyle = ref('')
 const loading = ref(true)
-const resultUrl = ref('')
-const acceptImage = () => {
+const result = ref('')
+const acceptText = () => {
     // 插入到当前光标位置
     const editor = props.editor
-    editor.commands.insertContent(`<img src="${resultUrl.value}" alt="" />`)
+    editor.commands.insertContent(result.value)
     showThis.value = false
 }
 
-const generateImage = () => {
+const generateText = () => {
     clickedGenerate.value = true
-    api.generateImage({
-        text: prompt,
+    loading.value = true
+    api.generateText({
+        content: prompt.value,
         style: selectedStyle.value,
-        resolution: '512*512',
-    }).then((url) => {
-        loading.value = false
-        resultUrl.value = url
-        console.log('Generate image success')
     })
+        .then((response) => {
+            console.log('response', response)
+            result.value = response
+        })
+        .catch((err) => {
+            ElMessage.error('Failed to generate text', err)
+        })
+        .finally(() => {
+            loading.value = false
+        })
 }
 </script>
 
 <style scoped>
-.el-tiptap-editor__ai-image {
+.el-tiptap-editor__ai-text {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -110,7 +99,7 @@ const generateImage = () => {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    .el-tiptap-editor__ai-image__input {
+    .el-tiptap-editor__ai-text__input {
         background-color: whitesmoke;
         margin-bottom: 20px;
     }

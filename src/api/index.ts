@@ -67,4 +67,8 @@ export default {
     OCR: async function (params: object) {
         return await api.post(`ai/ocr/infer/`, params)
     },
+    // 以特定的风格生成文本
+    generateText: async function (params: object) {
+        return (await api.post(`ai/chat/styled_ggenerate/`, params)).data.response
+    },
 }

@@ -82,7 +82,7 @@ const acceptImage = () => {
 const generateImage = () => {
     clickedGenerate.value = true
     api.generateImage({
-        text: prompt,
+        text: prompt.value,
         style: selectedStyle.value,
         resolution: '512*512',
     }).then((url) => {

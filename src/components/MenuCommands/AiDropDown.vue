@@ -35,6 +35,9 @@
                 <el-dropdown-item :icon="MagicStick" command="imageGen"
                     >{{ t('editor.extensions.Ai.chat.imageGen') }}
                 </el-dropdown-item>
+                <el-dropdown-item :icon="Promotion" command="promptWriting"
+                    >{{ t('editor.extensions.Ai.chat.promptWriting') }}
+                </el-dropdown-item>
             </el-dropdown-menu>
         </template>
     </el-dropdown>
@@ -56,7 +59,7 @@ import { Editor } from '@tiptap/vue-3'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import AiDialog from '@/components/MenuCommands/AiDialog.vue'
 import CommandButton from './CommandButton.vue'
-import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick } from '@element-plus/icons-vue'
+import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion } from '@element-plus/icons-vue'
 import api from '@/api'
 import AiImage from './AiImage.vue'
 import AiPromptWriter from './AiPromptWriter.vue'
@@ -179,6 +182,9 @@ function handleCommand(command: string) {
             break
         case 'imageGen':
             aiImageDialogVisible.value = true
+            break
+        case 'promptWriting':
+            aiPromptWriterDialogVisible.value = true
             break
         default:
             console.log(`Unknown command: ${command}`)

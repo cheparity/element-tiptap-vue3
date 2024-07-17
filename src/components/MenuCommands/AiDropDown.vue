@@ -12,14 +12,29 @@
         <template #dropdown>
             <el-dropdown-menu>
                 <!-- 为了跟下面的语音识别风格统一，都是四个字 -->
-                <el-dropdown-item :icon="Aim" command="summarize">生成摘要</el-dropdown-item>
-                <el-dropdown-item :icon="Sugar" command="polish">润色文档</el-dropdown-item>
-                <el-dropdown-item :icon="Switch" command="translate">翻译段落</el-dropdown-item>
-                <el-dropdown-item :icon="Finished" command="correct">段落改错</el-dropdown-item>
-                <el-dropdown-item :icon="EditPen" command="continuation">续写段落</el-dropdown-item>
+                <el-dropdown-item :icon="Aim" command="summarize"
+                    >{{ t('editor.extensions.Ai.chat.summarize') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Sugar" command="polish"
+                    >{{ t('editor.extensions.Ai.chat.polish') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Switch" command="translate"
+                    >{{ t('editor.extensions.Ai.chat.translate') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Finished" command="correct"
+                    >{{ t('editor.extensions.Ai.chat.correct') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="EditPen" command="continuation">
+                    {{ t('editor.extensions.Ai.chat.continuation') }}
+                </el-dropdown-item>
                 <!-- 分割 -->
                 <el-dropdown-item divided />
-                <el-dropdown-item :icon="Mic" command="voiceRecognition">语音识别</el-dropdown-item>
+                <el-dropdown-item :icon="Mic" command="voiceRecognition"
+                    >{{ t('editor.extensions.Ai.chat.asr') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="MagicStick" command="imageGen"
+                    >{{ t('editor.extensions.Ai.chat.imageGen') }}
+                </el-dropdown-item>
             </el-dropdown-menu>
         </template>
     </el-dropdown>
@@ -31,18 +46,23 @@
         @accept="acceptResult"
     />
     <VoiceRecognition v-if="voiceRecognitionDialogVisible" :editor="editor" :content="voiceContent" />
+    <AiImage v-show="aiImageDialogVisible" :editor="editor" />
+    <AiPromptWriter v-show="aiPromptWriterDialogVisible" :editor="editor" />
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { Editor } from '@tiptap/vue-3'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import AiDialog from '@/components/MenuCommands/AiDialog.vue'
-import VoiceRecognition from './VoiceRecognition.vue'
 import CommandButton from './CommandButton.vue'
-import { Sugar, Aim, EditPen, Switch, Finished, Mic } from '@element-plus/icons-vue'
+import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick } from '@element-plus/icons-vue'
 import api from '@/api'
+import AiImage from './AiImage.vue'
+import AiPromptWriter from './AiPromptWriter.vue'
 
+const aiPromptWriterDialogVisible = ref(false)
+const aiImageDialogVisible = ref(false)
 const voiceRecognitionDialogVisible = ref(false)
 const voiceContent = ref('')
 const props = defineProps({
@@ -79,7 +99,7 @@ const getSelectedContent = (): string => {
     }
     return text
 }
-
+const selectedContent = computed(() => getSelectedContent())
 const copyContent = (content: string) => {
     navigator.clipboard
         .writeText(content)
@@ -91,7 +111,6 @@ const copyContent = (content: string) => {
             ElMessage('😭复制失败了，稍后重试一下吧！')
         })
 }
-
 const showLoadingDialog = () => {
     aiDialogVisible.value = true
     dialogLoading.value = true
@@ -157,6 +176,9 @@ function handleCommand(command: string) {
             break
         case 'voiceRecognition':
             voiceRecognitionDialogVisible.value = true
+            break
+        case 'imageGen':
+            aiImageDialogVisible.value = true
             break
         default:
             console.log(`Unknown command: ${command}`)

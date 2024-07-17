@@ -6,10 +6,12 @@ const api = axios.create({
     withCredentials: false,
     timeout: 50000,
 })
+
 // 延时函数
 function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
 export default {
     // 文本摘要
     abstract: async function (params: { content: string }) {
@@ -34,46 +36,35 @@ export default {
 
     // 生成图片
     generateImage: async function (params: Object) {
-        const taskId = (
-            await api.post(`ai/pictures/generate/`, params, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            })
-        ).data.data.primaryTaskId
+        //模拟生成图片
+        return new Promise<string>((resolve) => {
+            setTimeout(() => {
+                resolve('https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png')
+            }, 2000)
+        })
 
-        console.log(`output->taskId`, taskId)
-        await delay(5000)
+        // const taskId = (
+        //     await api.post(`ai/pictures/generate/`, params)
+        // ).data.data.primaryTaskId
 
-        return (
-            await api.post(
-                `ai/pictures/get_img/`,
-                { taskId },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
-            )
-        ).data.img
+        // console.log(`output->taskId`, taskId)
+        // await delay(5000)
+
+        // return (
+        //     await api.post(
+        //         `ai/pictures/get_img/`,
+        //         {taskId})
+        // ).data.img
     },
     // 语音识别
     voiceRecognize: async function (params: object) {
-        // 检查登陆状态
-        // if (!localStorage.getItem('token')) {
-        //     ElMessage.error('请先登录')
-        //     return
-        // }
-
         return await api.post(`ai/speeches/recognize/`, params)
     },
     // 图片目标检测
     objectDetect: async function (params: object) {
-        return await api.post(`ai/ocr/pattern/`, params, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        })
+        return await api.post(`ai/ocr/pattern/`, params)
+    },
+    OCR: async function (params: object) {
+        return await api.post(`ai/ocr/infer/`, params)
     },
 }

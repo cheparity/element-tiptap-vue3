@@ -3,6 +3,21 @@ export default {
         extensions: {
             Ai: {
                 tooltip: 'Ai Options',
+                image: {
+                    ocr: 'OCR',
+                    od: 'Object Detection',
+                },
+                chat: {
+                    prompt: 'prompt',
+                    summarize: 'summarize',
+                    polish: 'polish doc',
+                    translate: 'translate',
+                    correct: 'correct',
+                    continuation: 'continue writing',
+                    asr: 'speech recognition',
+                    imageGen: 'generate AI image',
+                    imageGen_prompt: 'Describe the image that you want me to generate.',
+                },
             },
             Bold: {
                 tooltip: 'Bold',

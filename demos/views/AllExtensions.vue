@@ -3,15 +3,15 @@
         <!-- <el-tiptap lang="ru" :extensions="textExtensions" content="Text Extensions" /> -->
 
         <el-tiptap
-            lang="ru"
+            lang="en"
             ref="editor"
             output="html"
             :extensions="allExtensions"
-            v-model:content="content1"
+            v-model:content="content"
             height="50vh"
         />
         {{ content1 }}
-        <el-tiptap lang="ru" output="json" :extensions="allExtensions" v-model:content="content1" />
+        <el-tiptap lang="en" output="json" :extensions="allExtensions" v-model:content="content1" />
     </div>
 </template>
 <script lang="ts">
@@ -19,7 +19,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     data() {
         return {
-            content1: '',
+            content1: '<div equation="e = mc^2" data-type="block-equation"></div>',
             content2: '',
         }
     },
@@ -27,6 +27,9 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import {
+    AiContext,
+    // InlineEquation,
+    BlockEquation,
     Doc,
     Text,
     Paragraph,
@@ -69,6 +72,7 @@ import {
     getSuggestionItems,
     renderItems,
 } from 'element-tiptap-vue3-fixed'
+import { ref } from 'vue'
 import codemirror from 'codemirror'
 import 'codemirror/lib/codemirror.css' // import base style
 import 'codemirror/mode/xml/xml.js' // language
@@ -85,7 +89,9 @@ lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
 lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
-
+const content = ref(
+    '<h2 style="text-align: center;">Welcome To Element Tiptap Editor Demo</h2><p>🔥 <strong>Element Tiptap Editor </strong>🔥is a WYSIWYG rich-text editor using&nbsp; <a href="https://github.com/scrumpy/tiptap" target="_blank" ref="nofollow noopener noreferrer">tiptap</a>&nbsp;and <a href="https://github.com/element-plus/element-plus" target="_blank" ref="nofollow noopener noreferrer">element-plus</a>&nbsp;for Vue3,<img src="https://i.ibb.co/nbRN3S2/undraw-upload-87y9.png" alt="" title="" height="200" data-display="right"> that\'s easy to use, friendly to developers, fully extensible and clean in design.</p><p></p><p style="text-align: right;">👉Click on the image to get started image features 👉</p><p></p><p>You can switch to <strong>Code View </strong>💻 mode and toggle <strong>Fullscreen</strong> 📺 in this demo.</p><p></p><p><strong>Got questions or need help or feature request?</strong></p><p>🚀 <strong>welcome to submit an <a href="https://github.com/Leecason/element-tiptap/issues" target="_blank" ref="nofollow noopener noreferrer">issue</a></strong> 😊</p><p>I\'m continuously working to add in new features.</p><p></p><blockquote><p>This demo is simple, switch tab for more features.</p><p>All demos source code: <a href="https://github.com/Leecason/element-tiptap/blob/master/demos/views/Index.vue" target="_blank" ref="nofollow noopener noreferrer">source code 🔗</a></p></blockquote>'
+)
 const textExtensions = [
     Doc,
     Text,
@@ -142,6 +148,10 @@ const richAndToolsExtensions = [
     History,
 ]
 const allExtensions = [
+    AiContext.configure({ bubble: true }),
+    History.configure({ depth: 10 }),
+    // InlineEquation,
+    BlockEquation,
     Doc,
     Text,
     Paragraph,
@@ -155,7 +165,6 @@ const allExtensions = [
     Color.configure({ bubble: true }),
     Highlight.configure({ bubble: true }),
     FormatClear.configure({ bubble: true }),
-    History.configure({ depth: 10 }),
     Heading.configure({ level: 5, bubble: true }),
     BulletList.configure({ bubble: true }),
     OrderedList.configure({ bubble: true }),

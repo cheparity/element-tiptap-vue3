@@ -64,6 +64,7 @@
         "axios": "^1.7.2",
         "core-js": "^3.31.0",
         "highlight.js": "^11.8.0",
+        "katex": "^0.16.11",
         "lowlight": "^2.9.0",
         "prosemirror-state": "^1.4.3",
         "prosemirror-tables": "^1.3.3",

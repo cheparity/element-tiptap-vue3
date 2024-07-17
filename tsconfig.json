@@ -27,7 +27,9 @@
         "src/**/*.vue",
         "tests/**/*.ts",
         "tests/**/*.tsx",
-        "src/extensions/print.ts"
+        "src/extensions/print.ts",
+        "src/extensions/block-equation.js",
+        "src/extensions/inline-equation.js"
     ],
     "exclude": ["node_modules"]
 }

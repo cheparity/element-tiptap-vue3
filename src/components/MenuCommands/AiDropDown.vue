@@ -61,6 +61,7 @@ import AiDialog from '@/components/MenuCommands/AiDialog.vue'
 import CommandButton from './CommandButton.vue'
 import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion } from '@element-plus/icons-vue'
 import api from '@/api'
+import VoiceRecognition from './VoiceRecognition.vue'
 import AiImage from './AiImage.vue'
 import AiPromptWriter from './AiPromptWriter.vue'
 

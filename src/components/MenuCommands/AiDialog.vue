@@ -49,7 +49,6 @@ const renderText = (text: string) => {
 }
 const acceptResult = () => {
     // 获取当前文本
-    console.log('接受了结果', currentContent.value)
     emit('accept', currentContent.value)
 }
 const closeDialog = () => {

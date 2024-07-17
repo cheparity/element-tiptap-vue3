@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import { ElButton, ElMessage, ElInput, ElSelect, ElOption } from 'element-plus'
+import { ElButton, ElMessage, ElInput, ElSelect, ElOption, ElCard, ElSkeleton, ElSkeletonItem } from 'element-plus'
 import { Editor } from '@tiptap/vue-3'
 import api from '@/api'
 const emits = defineEmits(['onClose'])

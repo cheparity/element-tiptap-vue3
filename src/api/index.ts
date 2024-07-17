@@ -33,18 +33,16 @@ export default {
     correct: async function (params: { content: string }) {
         return (await api.post(`ai/correct/`, params)).data.response
     },
+    // 生成表格
+    generateTable: async function (params: { content: string }) {
+        return (await api.post(`ai/chat/form/`, params)).data.res
+    },
 
-    // 生成图片
+    //TODO 生成图片
     generateImage: async function (params: Object) {
-        //模拟生成图片
-        // return new Promise<string>((resolve) => {
-        //     setTimeout(() => {
-        //         resolve('https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png')
-        //     }, 2000)
-        // })
-
-        const taskId = (await api.post(`ai/pictures/generate/`, params)).data.data.primaryTaskId
-
+        const data = (await api.post(`ai/pictures/generate/`, params)).data
+        console.log('data -> ', data)
+        const taskId = data.data.primaryTaskId
         await delay(5000)
 
         return (await api.post(`ai/pictures/get_img/`, { taskId })).data.img

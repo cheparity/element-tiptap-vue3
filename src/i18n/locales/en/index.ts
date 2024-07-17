@@ -17,8 +17,9 @@ export default {
                     asr: 'speech recognition',
                     imageGen: 'generate AI image',
                     imageGen_prompt: 'Describe the image that you want me to generate.',
-                    promptWriting: 'Writing by prompt',
+                    promptWriting: 'writing by prompt',
                     promptWriting_prompt: 'Write a prompt to generate text.',
+                    generateTable: 'Ai generate table',
                 },
             },
             Bold: {

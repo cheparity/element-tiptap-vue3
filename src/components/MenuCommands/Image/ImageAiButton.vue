@@ -1,5 +1,5 @@
 <template>
-    <el-popover placement="top" trigger="click" popper-class="el-tiptap-popper" ref="popoverRef">
+    <el-popover placement="bottom" trigger="click" popper-class="el-tiptap-popper" ref="popoverRef">
         <div class="el-tiptap-popper__menu">
             <div
                 v-for="item in menuItems"
@@ -22,69 +22,73 @@
                     :tooltip="t('editor.extensions.Ai.tooltip')"
                     icon="ai"
                     :button-icon="buttonIcon"
-                    @click="openAiImageDialog"
                 />
             </span>
         </template>
     </el-popover>
 
     <div v-show="ocrDialogVisible" class="el-tiptap__ocr-dialog-visible">
-        <el-dialog width="600px" :before-close="handleClose" :custom-class="'custom-dialog'">
-            <template #title>
-                <span>OCR 结果</span>
-            </template>
+        <el-dialog title="OCR结果">
             <div class="dialog-content">
-                <div v-if="loading" class="loading-container">
-                    <div class="loading-spinner"></div>
-                </div>
-                <div v-else class="ocr-content">
-                    <img :src="ocrResult.image" alt="OCR Image" class="ocr-image" />
-                    <div class="text-container" v-html="ocrResult.text"></div>
-                </div>
+                <el-skeleton :loading="loading" animated>
+                    <template #template>
+                        <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
+                        <el-skeleton :rows="3" />
+                    </template>
+                    <template #default>
+                        <div class="ocr-content">
+                            <img :src="ocrResult.image" alt="OCR Image" class="ocr-image" />
+                            <div class="text-container" v-html="ocrResult.text"></div>
+                        </div>
+                    </template>
+                </el-skeleton>
             </div>
+
             <div class="dialog-footer">
-                <el-button @click="acceptResult">接受</el-button>
-                <el-button @click="ocrDialogVisible = false" class="close-button">关闭</el-button>
+                <el-button @click="acceptResult">Copy</el-button>
+                <el-button type="danger" round @click="ocrDialogVisible = false">Close</el-button>
             </div>
         </el-dialog>
     </div>
-
     <div v-show="odDialogVisible" class="el-tiptap__od-dialog-visible">
-        <el-dialog width="600px" :before-close="handleClose" :custom-class="'custom-dialog'">
-            <template #title>
-                <span>目标检测结果</span>
-            </template>
+        <el-dialog title="目标检测结果" width="600px">
             <div class="dialog-content">
-                <div v-if="loading" class="loading-container">
-                    <div class="loading-spinner"></div>
-                </div>
-                <div v-else class="ocr-content">
-                    <div v-for="(item, index) in odResult" :key="index" class="ocr-item">
-                        <div class="ocr-item-header">
-                            <span class="ocr-score">Score: {{ item.score }}</span>
-                            <span class="ocr-keyword">{{ item.keyword }}</span>
+                <el-skeleton :loading="loading" animated>
+                    <template #template>
+                        <el-skeleton :rows="10" />
+                    </template>
+                    <template #default>
+                        <div class="ocr-content">
+                            <div v-for="(item, index) in odResult" :key="index" class="ocr-item">
+                                <div class="ocr-item-header">
+                                    <span class="ocr-score">Score: {{ item.score }}</span>
+                                    <span class="ocr-keyword">{{ item.keyword }}</span>
+                                </div>
+                                <div
+                                    v-if="item.baike_info.baike_url || item.baike_info.image_url"
+                                    class="ocr-item-content"
+                                >
+                                    <a
+                                        :href="item.baike_info.baike_url"
+                                        target="_blank"
+                                        v-if="item.baike_info.baike_url"
+                                        >百科链接</a
+                                    >
+                                    <a
+                                        style="margin-left: 5px"
+                                        v-if="item.baike_info.image_url"
+                                        :href="item.baike_info.image_url"
+                                        >图片链接</a
+                                    >
+                                    <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div v-if="item.baike_info.baike_url || item.baike_info.image_url" class="ocr-item-content">
-                            <a :href="item.baike_info.baike_url" target="_blank" v-if="item.baike_info.baike_url"
-                                >百科链接</a
-                            >
-                            <a v-if="item.baike_info.image_url">
-                                {{ item.tem.baike_info.image_url }}
-                            </a>
-                            <!--                            <img-->
-                            <!--                                :src="item.baike_info.image_url"-->
-                            <!--                                alt="image"-->
-                            <!--                                v-if="item.baike_info.image_url"-->
-                            <!--                                class="ocr-image"-->
-                            <!--                            />-->
-                            <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
-                        </div>
-                    </div>
-                </div>
+                    </template>
+                </el-skeleton>
             </div>
             <div class="dialog-footer">
-                <!-- <el-button @click="acceptResult">接受</el-button> -->
-                <el-button @click="odDialogVisible = false" class="close-button">关闭</el-button>
+                <el-button round type="danger" @click="closeOd">关闭</el-button>
             </div>
         </el-dialog>
     </div>
@@ -93,7 +97,7 @@
 <script setup lang="js">
 import {ref, inject} from 'vue'
 import {nodeViewProps} from '@tiptap/vue-3'
-import {ElPopover} from 'element-plus'
+import {ElMessage, ElPopover, ElDialog, ElSkeleton, ElSkeletonItem} from 'element-plus'
 import CommandButton from '../CommandButton.vue'
 import api from '@/api'
 
@@ -111,12 +115,30 @@ const ocrResult = ref({
 })
 const odResult = ref([])
 const acceptResult = () => {
+    navigator.clipboard
+        .writeText(ocrResult.value.text)
+        .then(() => {
+            ElMessage.success('内容已复制到剪贴板')
+        })
+        .catch((err) => {
+            console.error('复制失败', err)
+            ElMessage.success('😭复制失败了，稍后重试一下吧！')
+        })
+        .finally(() => {
+            ocrDialogVisible.value = false // 关闭
+            //清除数据
+            ocrResult.value = {
+                image: '',
+                text: '',
+            }
+        })
     console.log('accept result')
 }
-const closeDialog = () => {
-    ocrDialogVisible.value = false
+const closeOd = () => {
+    console.log('close od')
+    odDialogVisible.value = false
+    odResult.value = []
 }
-
 const odDialogVisible = ref(false)
 
 const loading = ref(false)
@@ -133,18 +155,16 @@ const menuItems = ref([{key: 'ocr', name: t('editor.extensions.Ai.image.ocr')}, 
 }])
 
 const openAiImageDialog = () => {
-    // Your logic to open the dialog
     console.log('Open AI Image Dialog')
-}
 
-const hidePopover = () => {
-    if (popoverRef.value) {
+    const hidePopover = () => {
+        if (popoverRef.value) {
+    }
         popoverRef.value.hide()
     }
 }
 
 const handleCommand = (item) => {
-    console.log('Command', item)
     currItem.value = item
     loading.value = true
     // Handle command execution logic based on the item
@@ -180,6 +200,8 @@ const handleCommand = (item) => {
 
                     } catch (ocrError) {
                         console.error('OCR 识别失败:', ocrError)
+                        ElMessage.error('OCR 识别失败，是不是没有文字呢？')
+                        ocrDialogVisible.value = false
                     }
                 }
                 reader.readAsDataURL(blob)
@@ -192,6 +214,7 @@ const handleCommand = (item) => {
         // Your target detection logic here
         // 将图片转为 base64
         const url = node.attrs.src
+
         fetch(url)
             .then(res => res.blob())
             .then(blob => {
@@ -239,6 +262,7 @@ const handleCommand = (item) => {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 1000;
+    height: 400px;
 
     .dialog-content {
         display: flex;
@@ -247,6 +271,7 @@ const handleCommand = (item) => {
         justify-content: center;
         margin-top: 20px;
         color: #333;
+        height: 100%;
     }
 
     .loading-container {
@@ -294,22 +319,6 @@ const handleCommand = (item) => {
     .dialog-footer {
         display: flex;
         justify-content: flex-end;
-        margin-top: 5px;
-    }
-
-    .close-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        padding: 5px 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    .close-button:hover {
-        background-color: #0056b3;
     }
 
     @keyframes spin {
@@ -416,21 +425,6 @@ const handleCommand = (item) => {
         display: flex;
         justify-content: flex-end;
         margin-top: 5px;
-    }
-
-    .close-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        padding: 5px 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    .close-button:hover {
-        background-color: #0056b3;
     }
 
     @keyframes spin {

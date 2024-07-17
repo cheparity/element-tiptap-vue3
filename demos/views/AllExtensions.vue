@@ -1,7 +1,6 @@
 <template>
     <div class="el-tiptap-editor__wrapper">
         <!-- <el-tiptap lang="ru" :extensions="textExtensions" content="Text Extensions" /> -->
-        <el-button @click="content2 = content1">Get content</el-button>
         <el-tiptap
             lang="en"
             ref="editor"
@@ -11,7 +10,7 @@
             height="50vh"
             @onUpdate="onEditorUpdate"
         />
-        {{ content1 }}
+        {{ content2 }}
         <el-tiptap lang="en" output="json" :extensions="allExtensions" v-model:content="content2" />
     </div>
 </template>

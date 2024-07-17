@@ -32,11 +32,14 @@
                 <el-dropdown-item :icon="Mic" command="voiceRecognition"
                     >{{ t('editor.extensions.Ai.chat.asr') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="MagicStick" command="imageGen"
+                <el-dropdown-item :icon="Picture" command="imageGen"
                     >{{ t('editor.extensions.Ai.chat.imageGen') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Promotion" command="promptWriting"
                     >{{ t('editor.extensions.Ai.chat.promptWriting') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="MagicStick" command="generateTable"
+                    >{{ t('editor.extensions.Ai.chat.generateTable') }}
                 </el-dropdown-item>
             </el-dropdown-menu>
         </template>
@@ -65,12 +68,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue'
+import { computed, inject, readonly, ref } from 'vue'
 import { Editor } from '@tiptap/vue-3'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
 import CommandButton from './CommandButton.vue'
-import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion } from '@element-plus/icons-vue'
+import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion, Picture } from '@element-plus/icons-vue'
 import api from '@/api'
 import VoiceRecognition from './VoiceRecognition.vue'
 import AiImage from './AiImage.vue'
@@ -81,6 +84,16 @@ const aiImageDialogVisible = ref(false)
 const voiceRecognitionDialogVisible = ref(false)
 const voiceContent = ref('')
 const props = defineProps({
+    enableTooltip: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
+    readonly: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
     editor: {
         type: Editor,
         required: true,
@@ -198,6 +211,7 @@ function handleCommand(command: string) {
             api.continueWrite({
                 content: selectedContent.value,
             }).then((ret) => {
+                console.log('generate table return', ret)
                 dialogText.value = ret
             })
 
@@ -210,6 +224,18 @@ function handleCommand(command: string) {
             break
         case 'promptWriting':
             aiPromptWriterDialogVisible.value = true
+            break
+        case 'generateTable':
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
+            api.generateTable({
+                content: selectedContent.value,
+            }).then((ret) => {
+                dialogText.value = ret
+            })
             break
         default:
             console.log(`Unknown command: ${command}`)

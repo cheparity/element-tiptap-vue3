@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import { ref, inject, computed } from 'vue'
 import { Editor } from '@tiptap/vue-3'
+import { ElCard, ElSkeleton, ElSkeletonItem } from 'element-plus'
 
 const emits = defineEmits(['onClose', 'onCopy', 'onAccept'])
 const props = defineProps({

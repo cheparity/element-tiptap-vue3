@@ -37,24 +37,17 @@ export default {
     // 生成图片
     generateImage: async function (params: Object) {
         //模拟生成图片
-        return new Promise<string>((resolve) => {
-            setTimeout(() => {
-                resolve('https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png')
-            }, 2000)
-        })
+        // return new Promise<string>((resolve) => {
+        //     setTimeout(() => {
+        //         resolve('https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png')
+        //     }, 2000)
+        // })
 
-        // const taskId = (
-        //     await api.post(`ai/pictures/generate/`, params)
-        // ).data.data.primaryTaskId
+        const taskId = (await api.post(`ai/pictures/generate/`, params)).data.data.primaryTaskId
 
-        // console.log(`output->taskId`, taskId)
-        // await delay(5000)
+        await delay(5000)
 
-        // return (
-        //     await api.post(
-        //         `ai/pictures/get_img/`,
-        //         {taskId})
-        // ).data.img
+        return (await api.post(`ai/pictures/get_img/`, { taskId })).data.img
     },
     // 语音识别
     voiceRecognize: async function (params: object) {

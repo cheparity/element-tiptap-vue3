@@ -1,5 +1,5 @@
 <template>
-    <el-dropdown @command="handleCommand" trigger="click">
+    <el-dropdown placement="bottom" @command="handleCommand" trigger="click">
         <div>
             <command-button
                 :enable-tooltip="enableTooltip"
@@ -41,23 +41,34 @@
             </el-dropdown-menu>
         </template>
     </el-dropdown>
+    <!-- Dialog 区域 -->
     <AiDialog
         v-if="aiDialogVisible"
-        :fullContent="fullDialogContent"
-        :loading="dialogLoading"
-        @close="aiDialogVisible = false"
-        @accept="acceptResult"
+        :text="dialogText"
+        :editor="editor"
+        @onClose="() => closeChatDialog()"
+        @onCopy="(content) => copyContent(content)"
+        @onAccept="(content) => acceptText(content)"
     />
-    <VoiceRecognition v-if="voiceRecognitionDialogVisible" :editor="editor" :content="voiceContent" />
-    <AiImage v-show="aiImageDialogVisible" :editor="editor" />
-    <AiPromptWriter v-show="aiPromptWriterDialogVisible" :editor="editor" />
+    <VoiceRecognition
+        @onClose="() => (voiceRecognitionDialogVisible = false)"
+        v-if="voiceRecognitionDialogVisible"
+        :editor="editor"
+        :content="voiceContent"
+    />
+    <AiImage @onClose="() => (aiImageDialogVisible = false)" v-show="aiImageDialogVisible" :editor="editor" />
+    <AiPromptWriter
+        @onClose="() => (aiPromptWriterDialogVisible = false)"
+        v-show="aiPromptWriterDialogVisible"
+        :editor="editor"
+    />
 </template>
 
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue'
 import { Editor } from '@tiptap/vue-3'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
-import AiDialog from '@/components/MenuCommands/AiDialog.vue'
+import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
 import CommandButton from './CommandButton.vue'
 import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion } from '@element-plus/icons-vue'
 import api from '@/api'
@@ -80,17 +91,37 @@ const props = defineProps({
     },
 })
 
+function closeChatDialog() {
+    aiDialogVisible.value = false
+    dialogText.value = ''
+}
+const copyContent = (content: string) => {
+    navigator.clipboard
+        .writeText(content)
+        .then(() => {
+            ElMessage.success('内容已复制到剪贴板')
+        })
+        .catch((err) => {
+            console.error('复制失败', err)
+            ElMessage.success('😭复制失败了，稍后重试一下吧！')
+        })
+        .finally(() => {
+            dialogText.value = ''
+            aiDialogVisible.value = false
+        })
+}
+const acceptText = (result: string) => {
+    console.log('Accept result', result)
+    const editor = props.editor
+    editor.commands.insertContent(result)
+    dialogText.value = ''
+    aiDialogVisible.value = false
+}
 const t = inject('t')
 const enableTooltip = inject('enableTooltip', true)
 const isCodeViewMode = inject('isCodeViewMode', false)
-const acceptResult = (content: string) => {
-    console.log('接受了结果', content)
-    props.editor.commands.insertContent(content)
-}
 const aiDialogVisible = ref(false)
-const dialogLoading = ref(false)
-const fullDialogContent = ref('')
-const getSelectedContent = (): string => {
+const selectedContent = computed((): string => {
     const state = props.editor.state
     let text = ''
     if (state) {
@@ -98,85 +129,78 @@ const getSelectedContent = (): string => {
         text = state.doc.textBetween(selection.from, selection.to, '')
         console.log('Selected text', text)
     }
-    if (text === '') {
-        ElMessage.warning('请先选择要处理的内容！')
-    }
+
     return text
-}
-const selectedContent = computed(() => getSelectedContent())
-const copyContent = (content: string) => {
-    navigator.clipboard
-        .writeText(content)
-        .then(() => {
-            ElMessage('内容已复制到剪贴板')
-        })
-        .catch((err) => {
-            console.error('复制失败', err)
-            ElMessage('😭复制失败了，稍后重试一下吧！')
-        })
-}
-const showLoadingDialog = () => {
-    aiDialogVisible.value = true
-    dialogLoading.value = true
-    fullDialogContent.value = ''
-}
-const updateDialogContent = (newContent: string) => {
-    dialogLoading.value = false
-    fullDialogContent.value = newContent
-}
+})
+
+const dialogText = ref<string>('')
 
 function handleCommand(command: string) {
     switch (command) {
         case 'summarize':
-            showLoadingDialog()
+            // 把下面这个函数传进
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
             api.abstract({
-                content: getSelectedContent(),
+                content: selectedContent.value,
             }).then((ret) => {
-                // 现在是原先的效果
-                // 原先是复制，但是我们现在可以稍作修改，直接插入
-                updateDialogContent(ret)
-                // props.editor.commands.insertContent(ret)
+                dialogText.value = ret
             })
             break
         case 'polish':
-            showLoadingDialog()
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
             api.polish({
-                content: getSelectedContent(),
+                content: selectedContent.value,
             }).then((ret) => {
-                updateDialogContent(ret)
+                dialogText.value = ret
             })
             break
         case 'translate':
-            //点击执行这个函数，内容就会被替换掉
-            showLoadingDialog()
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
             api.translate({
-                content: getSelectedContent(),
+                content: selectedContent.value,
                 language: 'en',
             }).then((ret) => {
-                updateDialogContent(ret)
+                dialogText.value = ret
             })
 
-            // props.editor.commands.insertContent('This is polish')
             break
         case 'correct':
-            showLoadingDialog()
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
             api.correct({
-                content: getSelectedContent(),
+                content: selectedContent.value,
             }).then((ret) => {
-                updateDialogContent(ret)
+                dialogText.value = ret
             })
 
-            // props.editor.commands.insertContent('This is polish')
             break
         case 'continuation':
-            showLoadingDialog()
+            if (selectedContent.value === '') {
+                ElMessage.warning('请先选择要处理的内容！')
+                return
+            }
+            aiDialogVisible.value = true
             api.continueWrite({
-                content: getSelectedContent(),
+                content: selectedContent.value,
             }).then((ret) => {
-                updateDialogContent(ret)
+                dialogText.value = ret
             })
 
-            // props.editor.commands.continuation()
             break
         case 'voiceRecognition':
             voiceRecognitionDialogVisible.value = true

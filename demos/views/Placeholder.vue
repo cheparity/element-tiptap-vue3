@@ -16,7 +16,7 @@ import {
     BulletList,
     OrderedList,
     History,
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 const extensions = [Doc, Text, Paragraph, Bold, Underline, Italic, Strike, BulletList, OrderedList, History]
 </script>

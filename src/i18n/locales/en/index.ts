@@ -8,7 +8,7 @@ export default {
                     od: 'Object Detection',
                 },
                 chat: {
-                    prompt: 'prompt',
+                    prompt: 'Prompt',
                     summarize: 'summarize',
                     polish: 'polish doc',
                     translate: 'translate',

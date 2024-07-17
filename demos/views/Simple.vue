@@ -30,7 +30,7 @@ import {
     Fullscreen,
     History,
     AiContext
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 import codemirror from 'codemirror'
 import 'codemirror/lib/codemirror.css' // import base style

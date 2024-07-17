@@ -44,7 +44,7 @@
             </div>
             <div class="dialog-footer">
                 <el-button @click="acceptResult">接受</el-button>
-                <el-button @click="closeDialog" class="close-button">关闭</el-button>
+                <el-button @click="ocrDialogVisible = false" class="close-button">关闭</el-button>
             </div>
         </el-dialog>
     </div>
@@ -68,20 +68,23 @@
                             <a :href="item.baike_info.baike_url" target="_blank" v-if="item.baike_info.baike_url"
                                 >百科链接</a
                             >
-                            <img
-                                :src="item.baike_info.image_url"
-                                alt="image"
-                                v-if="item.baike_info.image_url"
-                                class="ocr-image"
-                            />
+                            <a v-if="item.baike_info.image_url">
+                                {{ item.tem.baike_info.image_url }}
+                            </a>
+                            <!--                            <img-->
+                            <!--                                :src="item.baike_info.image_url"-->
+                            <!--                                alt="image"-->
+                            <!--                                v-if="item.baike_info.image_url"-->
+                            <!--                                class="ocr-image"-->
+                            <!--                            />-->
                             <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="dialog-footer">
-                <el-button @click="acceptResult">接受</el-button>
-                <el-button @click="closeDialog" class="close-button">关闭</el-button>
+                <!-- <el-button @click="acceptResult">接受</el-button> -->
+                <el-button @click="odDialogVisible = false" class="close-button">关闭</el-button>
             </div>
         </el-dialog>
     </div>

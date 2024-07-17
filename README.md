@@ -44,7 +44,7 @@ English
 ### NPM
 
 ```shell
-npm i element-tiptap-vue3-fixed
+npm i element-tiptap-vue3-niyuta
 ```
 
 #### Install plugin
@@ -53,9 +53,9 @@ npm i element-tiptap-vue3-fixed
 import { createApp } from 'vue'
 import App from './App.vue'
 import ElementPlus from 'element-plus'
-import ElementTiptapPlugin from 'element-tiptap-vue3-fixed'
+import ElementTiptapPlugin from 'element-tiptap-vue3-niyuta'
 // import ElementTiptap's styles
-import 'element-tiptap-vue3-fixed/lib/style.css'
+import 'element-tiptap-vue3-niyuta/lib/style.css'
 
 const app = createApp(App)
 
@@ -78,7 +78,7 @@ _Or_
 </template>
 
 <script setup>
-import { ElementTiptap } from 'element-tiptap-vue3-fixed'
+import { ElementTiptap } from 'element-tiptap-vue3-niyuta'
 </script>
 ```
 
@@ -104,7 +104,7 @@ import {
     Strike,
     BulletList,
     OrderedList,
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 // editor extensions
 // they will be added to menubar and bubble menu by the order you declare.
@@ -190,7 +190,7 @@ import {
   Commands,
   getSuggestionItems,
   renderItems
-} from 'element-tiptap-vue3-fixed';
+} from 'element-tiptap-vue3-niyuta';
 
 Commands.configure({
   suggestion: {
@@ -248,7 +248,7 @@ Link.configure({ addLinkPlaceholder: 'add link', // placeholder for adding link 
 placeholder for editing link }), You can customize the extension. See [Custom
 extensions](https://tiptap.dev/guide/custom-extensions). ### Example custom extension ```vue import CodeBlockLowlight
 from '@tiptap/extension-code-block-lowlight'; import { Editor } from '@tiptap/core'; import { CommandButton } from
-'element-tiptap-vue3-fixed'; export default CodeBlockLowlight.extend({ addOptions() { return { ...this.parent?.(),
+'element-tiptap-vue3-niyuta'; export default CodeBlockLowlight.extend({ addOptions() { return { ...this.parent?.(),
 button({ editor, t }: { editor: Editor; t: (...args: any[]) => string }) { return { component: CommandButton, //
 component of button which is used in menubar or bubblemenu (u can write your own component of button) componentProps: {
 // props is used in component command: () => { // command on click button editor.commands.toggleCodeBlock(); }, //
@@ -397,8 +397,8 @@ Specifies the editor i18n language.
 </template>
 
 <script setup>
-import { ElementTiptap } from 'element-tiptap-vue3-fixed';
-import en from 'element-tiptap-vue3-fixed/lib/locales/en';
+import { ElementTiptap } from 'element-tiptap-vue3-niyuta';
+import en from 'element-tiptap-vue3-niyuta/lib/locales/en';
 </script>
 ```
 

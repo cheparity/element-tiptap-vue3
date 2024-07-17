@@ -20,7 +20,7 @@ import {
     TextAlign,
     Indent,
     History,
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 const extensions = [
     Doc.configure({ title: true }),

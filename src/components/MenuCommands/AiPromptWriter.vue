@@ -1,5 +1,5 @@
 <template>
-    <div class="el-tiptap-editor__ai-text" v-show="showThis">
+    <div class="el-tiptap-editor__ai-text">
         <div style="margin-bottom: 15px">{{ t('editor.extensions.Ai.chat.prompt') }}</div>
         <!-- 加载框 -->
         <el-skeleton v-if="clickedGenerate" :loading="loading" style="width: 100%; margin-bottom: 20px" animated>
@@ -15,6 +15,7 @@
             type="textarea"
             v-model="prompt"
             class="el-tiptap-editor__ai-text__input"
+            maxlength="50"
             :placeholder="t('editor.extensions.Ai.chat.promptWriting_prompt')"
         ></el-input>
 
@@ -32,6 +33,11 @@
                 @click="acceptText"
                 >Accept Text</el-button
             >
+            <el-button type="danger" round style="width: auto; margin-left: 10px"
+                       @click="emits('onClose')"
+            >Close
+            </el-button
+            >
         </div>
     </div>
 </template>
@@ -41,8 +47,8 @@ import { ref, inject } from 'vue'
 import { ElButton, ElMessage, ElInput, ElSelect, ElOption } from 'element-plus'
 import { Editor } from '@tiptap/vue-3'
 import api from '@/api'
+const emits = defineEmits(['onClose'])
 const clickedGenerate = ref(false)
-const showThis = ref(false)
 const props = defineProps({
     editor: {
         type: Editor,
@@ -59,7 +65,6 @@ const acceptText = () => {
     // 插入到当前光标位置
     const editor = props.editor
     editor.commands.insertContent(result.value)
-    showThis.value = false
 }
 
 const generateText = () => {

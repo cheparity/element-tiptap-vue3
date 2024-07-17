@@ -16,15 +16,19 @@
             </el-upload>
         </div>
         <p v-else>{{ recognitionResult }}</p>
+        <el-button class="close-button" :icon="Close" @click="closeComponent"></el-button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { ElMessage, ElUpload } from 'element-plus'
+import {ref, defineEmits} from 'vue'
+import {ElMessage, ElUpload} from 'element-plus'
 import api from '@/api'
-import { Editor } from '@tiptap/vue-3'
-import { v4 as uuidv4 } from 'uuid'
+import {Close} from '@element-plus/icons-vue'
+import {Editor} from '@tiptap/vue-3'
+import {v4 as uuidv4} from 'uuid'
+
+const emits = defineEmits(['onClose'])
 
 const props = defineProps<{
     onUpdate?: (result: string) => void
@@ -85,15 +89,19 @@ const beforeUpload = (file: File) => {
 }
 
 const replaceNodeWithResult = (result: string) => {
-    const { state, view } = props.editor
+    const {state, view} = props.editor
     const tr = state.tr
     console.log(`output->props.editor`, props.editor)
     console.log(`output->state, view, tr`, state, view, tr)
-    const { from, to } = state.selection
+    const {from, to} = state.selection
 
     const node = state.schema.text(result)
     tr.replaceWith(from, to, node)
     view.dispatch(tr)
+}
+
+const closeComponent = () => {
+    emits('onClose')
 }
 </script>
 
@@ -112,6 +120,7 @@ const replaceNodeWithResult = (result: string) => {
     max-width: 100%;
     padding: 10px;
     animation: border-animation 2s infinite;
+
     .voice-recognition {
         width: 100%;
         max-width: 500px;
@@ -151,6 +160,12 @@ const replaceNodeWithResult = (result: string) => {
         font-size: 16px;
         color: #606266;
         margin-top: 20px;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 }
 </style>

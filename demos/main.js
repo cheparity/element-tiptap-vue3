@@ -9,7 +9,7 @@ import {
     ElTag,
 } from 'element-plus'
 
-import ElementTiptap from 'element-tiptap-vue3-fixed'
+import ElementTiptap from 'element-tiptap-vue3-niyuta'
 import App from './App.vue'
 import router from './router'
 

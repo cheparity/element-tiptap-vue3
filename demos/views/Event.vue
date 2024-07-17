@@ -31,7 +31,7 @@ import {
     TextAlign,
     Indent,
     History,
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 import { ElNotification } from 'element-plus'
 

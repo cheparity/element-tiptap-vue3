@@ -1,8 +1,8 @@
 {
-    "name": "element-tiptap-vue3-fixed",
+    "name": "element-tiptap-vue3-niyuta",
     "version": "1.2.2",
     "description": "🌸A modern WYSIWYG rich-text editor using tiptap and Element Plus for Vue3",
-    "author": "okijhhyu",
+    "author": "niyuta",
     "scripts": {
         "dev": "vite",
         "demo:preview": "vite preview",
@@ -13,8 +13,8 @@
         "semantic-release": "semantic-release",
         "prettier": "prettier --write ."
     },
-    "main": "./lib/element-tiptap-vue3-fixed.umd.js",
-    "module": "./lib/element-tiptap-vue3-fixed.es.js",
+    "main": "./lib/element-tiptap-vue3-niyuta.umd.js",
+    "module": "./lib/element-tiptap-vue3-niyuta.es.js",
     "files": [
         "lib/*"
     ],

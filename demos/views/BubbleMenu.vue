@@ -28,7 +28,7 @@ import {
     HorizontalRule,
     FormatClear,
     History,
-} from 'element-tiptap-vue3-fixed'
+} from 'element-tiptap-vue3-niyuta'
 
 const extensions = [
     Doc,

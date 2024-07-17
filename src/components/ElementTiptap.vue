@@ -12,8 +12,8 @@
         ]"
     >
         <div>
-            <MenuLeftSidebar/>
-           <MenuRightSidebar :editor="editor"/>
+            <!-- <MenuLeftSidebar/> -->
+            <MenuRightSidebar :editor="editor" />
         </div>
         <div>
             <menu-bubble :editor="editor" :class="editorBubbleMenuClass" />
@@ -327,6 +327,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../styles/editor.scss';
+@import '../styles/custom-editor.scss';
 @import '../styles/command-button.scss';
 </style>

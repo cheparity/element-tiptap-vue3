@@ -55,7 +55,7 @@ const props = defineProps({
 })
 const t = inject('t')
 const prompt = ref('')
-const textStyles = ref(['二次元', '写实风格', '古风', '赛博朋克', '水彩画', '油画', '卡通画'])
+const textStyles = ref(['学术', '商业', '幽默', '专业', '精简', '详尽', '正式'])
 const selectedStyle = ref('')
 const loading = ref(true)
 const result = ref('')

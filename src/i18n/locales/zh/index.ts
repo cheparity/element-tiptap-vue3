@@ -2,10 +2,28 @@ export default {
     editor: {
         extensions: {
             Ai: {
-                tooltip: '使用大模型',
+                tooltip: 'AI 选项',
+                image: {
+                    ocr: '光学字符识别',
+                    od: '目标检测',
+                },
+                chat: {
+                    prompt: '提示',
+                    summarize: '总结',
+                    polish: '润色文档',
+                    translate: '翻译',
+                    correct: '纠正',
+                    continuation: '继续写作',
+                    asr: '语音识别',
+                    imageGen: '生成 AI 图像',
+                    imageGen_prompt: '描述您想要生成的图像。',
+                    promptWriting: '根据提示写作',
+                    promptWriting_prompt: '生成指定文本',
+                    generateTable: 'AI 识别表格',
+                },
             },
             Bold: {
-                tooltip: '粗体',
+                tooltip: '加粗',
             },
             Underline: {
                 tooltip: '下划线',
@@ -14,12 +32,12 @@ export default {
                 tooltip: '斜体',
             },
             Strike: {
-                tooltip: '中划线',
+                tooltip: '删除线',
             },
             Heading: {
                 tooltip: '标题',
                 buttons: {
-                    paragraph: '正文',
+                    paragraph: '段落',
                     heading: '标题',
                 },
             },
@@ -34,9 +52,9 @@ export default {
                     tooltip: '添加链接',
                     control: {
                         title: '添加链接',
-                        href: '链接',
+                        href: '链接地址',
                         open_in_new_tab: '在新标签页中打开',
-                        confirm: '添加',
+                        confirm: '应用',
                         cancel: '取消',
                     },
                 },
@@ -44,7 +62,7 @@ export default {
                     tooltip: '编辑链接',
                     control: {
                         title: '编辑链接',
-                        href: '链接',
+                        href: '链接地址',
                         open_in_new_tab: '在新标签页中打开',
                         confirm: '更新',
                         cancel: '取消',
@@ -61,18 +79,18 @@ export default {
                 buttons: {
                     insert_image: {
                         tooltip: '插入图片',
-                        external: '插入网络图片',
-                        upload: '上传本地图片',
+                        external: '通过 URL 插入图片',
+                        upload: '上传图片',
                     },
                     remove_image: {
-                        tooltip: '删除',
+                        tooltip: '移除图片',
                     },
                     image_options: {
-                        tooltip: '图片属性',
+                        tooltip: '图片选项',
                     },
                     display: {
-                        tooltip: '布局',
-                        inline: '内联',
+                        tooltip: '显示',
+                        inline: '行内',
                         block: '断行',
                         left: '左浮动',
                         right: '右浮动',
@@ -80,23 +98,23 @@ export default {
                 },
                 control: {
                     insert_by_url: {
-                        title: '插入网络图片',
-                        placeholder: '输入链接',
+                        title: '插入图片',
+                        placeholder: '图片 URL',
                         confirm: '插入',
                         cancel: '取消',
-                        invalid_url: '请输入正确的图片链接',
+                        invalid_url: '请输入正确的 URL',
                     },
                     upload_image: {
-                        title: '上传本地图片',
-                        button: '将图片文件拖到此处或者点击上传',
+                        title: '上传图片',
+                        button: '选择一个图片文件或拖动到此处',
                     },
                     edit_image: {
                         title: '编辑图片',
                         confirm: '更新',
                         cancel: '取消',
                         form: {
-                            src: '图片链接',
-                            alt: '备用文本描述',
+                            src: '图片 URL',
+                            alt: '替代文本',
                             width: '宽度',
                             height: '高度',
                         },
@@ -107,7 +125,7 @@ export default {
                 tooltip: '插入视频',
                 control: {
                     title: '插入视频',
-                    placeholder: '输入链接',
+                    placeholder: '视频链接',
                     confirm: '插入',
                     cancel: '取消',
                 },
@@ -119,7 +137,7 @@ export default {
                 tooltip: '有序列表',
             },
             TodoList: {
-                tooltip: '任务列表',
+                tooltip: '待办列表',
             },
             TextAlign: {
                 buttons: {
@@ -145,23 +163,23 @@ export default {
                 default: '默认',
             },
             TextColor: {
-                tooltip: '文本颜色',
+                tooltip: '文字颜色',
             },
             TextHighlight: {
-                tooltip: '文本高亮',
+                tooltip: '高亮颜色',
             },
             LineHeight: {
-                tooltip: '行距',
+                tooltip: '行高',
             },
             Table: {
                 tooltip: '表格',
                 buttons: {
                     insert_table: '插入表格',
-                    add_column_before: '向左插入一列',
-                    add_column_after: '向右插入一列',
+                    add_column_before: '在前面插入列',
+                    add_column_after: '在后面插入列',
                     delete_column: '删除列',
-                    add_row_before: '向上插入一行',
-                    add_row_after: '向下插入一行',
+                    add_row_before: '在上面插入行',
+                    add_row_after: '在下面插入行',
                     delete_row: '删除行',
                     merge_cells: '合并单元格',
                     split_cell: '拆分单元格',
@@ -182,7 +200,7 @@ export default {
                 tooltip: '清除格式',
             },
             HorizontalRule: {
-                tooltip: '分隔线',
+                tooltip: '分割线',
             },
             History: {
                 tooltip: {
@@ -209,9 +227,9 @@ export default {
                 tooltip: '全选',
             },
             CodeView: {
-                tooltip: '查看源代码',
+                tooltip: '代码视图',
             },
         },
-        characters: '字数',
+        characters: '字符',
     },
 }

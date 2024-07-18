@@ -4,11 +4,7 @@
             <div
                 v-for="item in menuItems"
                 :key="item.key"
-                :class="{
-                    'el-tiptap-popper__menu__item--active': item === currItem,
-                }"
                 class="el-tiptap-popper__menu__item"
-                @mousedown="hidePopover"
                 @click="handleCommand(item)"
             >
                 <span>{{ item.name }}</span>
@@ -65,13 +61,13 @@
                             </div>
                             <div v-if="item.baike_info.baike_url || item.baike_info.image_url" class="ocr-item-content">
                                 <a :href="item.baike_info.baike_url" target="_blank" v-if="item.baike_info.baike_url"
-                                    >百科链接</a
+                                >百科链接</a
                                 >
                                 <a
                                     style="margin-left: 5px"
                                     v-if="item.baike_info.image_url"
                                     :href="item.baike_info.image_url"
-                                    >图片链接</a
+                                >图片链接</a
                                 >
                                 <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
                             </div>
@@ -86,10 +82,10 @@
     </div>
 </template>
 
-<script setup>
-import {ref, inject} from 'vue'
-import {nodeViewProps} from '@tiptap/vue-3'
-import {ElMessage, ElPopover, ElDialog, ElSkeleton, ElSkeletonItem} from 'element-plus'
+<script setup lang="ts">
+import { ref, inject } from 'vue'
+import { nodeViewProps } from '@tiptap/vue-3'
+import { ElMessage, ElPopover, ElDialog, ElSkeleton, ElSkeletonItem } from 'element-plus'
 import CommandButton from '../CommandButton.vue'
 import api from '@/api'
 
@@ -98,12 +94,12 @@ const props = defineProps({
     updateAttrs: nodeViewProps['updateAttributes'],
     buttonIcon: {
         type: String,
-        default: '',
-    },
+        default: ''
+    }
 })
 const ocrResult = ref({
     image: '',
-    text: '',
+    text: ''
 })
 const odResult = ref([])
 const acceptResult = () => {
@@ -121,12 +117,12 @@ const acceptResult = () => {
             //清除数据
             ocrResult.value = {
                 image: '',
-                text: '',
+                text: ''
             }
         })
-    }
+}
 const closeOd = () => {
-        odDialogVisible.value = false
+    odDialogVisible.value = false
     odResult.value = []
 }
 const odDialogVisible = ref(false)
@@ -139,19 +135,10 @@ const enableTooltip = inject('enableTooltip', true)
 
 const popoverRef = ref(null)
 const currItem = ref('')
-const menuItems = ref([{key: 'ocr', name: t('editor.extensions.Ai.image.ocr')}, {
+const menuItems = ref([{ key: 'ocr', name: t('editor.extensions.Ai.image.ocr') }, {
     key: 'od',
     name: t('editor.extensions.Ai.image.od')
 }])
-
-const openAiImageDialog = () => {
-
-    const hidePopover = () => {
-        if (popoverRef.value) {
-    }
-        popoverRef.value.hide()
-    }
-}
 
 const handleCommand = (item) => {
     currItem.value = item
@@ -166,17 +153,17 @@ const handleCommand = (item) => {
             .then(blob => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
-                    const base64_img = reader.result.split(',')[1] // 去掉前缀
-                                        try {
+                    const base64_img = (reader.result as string).split(',')[1] // 去掉前缀
+                    try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.OCR({
-                            base64_img,
+                            base64_img
                         })
 
-                                                const ocrImageUrl = ocrResponse.data.image_url
+                        const ocrImageUrl = ocrResponse.data.image_url
                         const ocrTexts = ocrResponse.data.texts.join(', ')
 
-                                                // 插入 OCR 结果图片
+                        // 插入 OCR 结果图片
                         // editor.chain().focus().deleteRange({ from: getPos(), to: getPos() + node.nodeSize }).setImage({ src: ocrImageUrl }).run()
                         ocrResult.value.image = ocrImageUrl
 
@@ -207,11 +194,11 @@ const handleCommand = (item) => {
             .then(blob => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
-                    const base64_img = reader.result.split(',')[1] // 去掉前缀
-                                        try {
+                    const base64_img = (reader.result as string).split(',')[1] // 去掉前缀
+                    try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.objectDetect({
-                            base64_img,
+                            base64_img
                         })
                         odResult.value = ocrResponse.data.result
 

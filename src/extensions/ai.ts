@@ -38,15 +38,15 @@ const Ai = Extension.create<AiOptions>({
 
     onTransaction({  transaction }) {
         // The editor state has changed.
-        console.log('onTransaction', transaction)
+        // console.log('onTransaction', transaction)
     },
     onFocus({ event }) {
         // The editor is focused.
-        console.log('onFocus', event)
+        // console.log('onFocus', event)
     },
     onBlur({ event }) {
         // The editor isn’t focused anymore.
-        console.log('onBlur', event)
+        // console.log('onBlur', event)
         // this.editor.commands.focus()
     },
 

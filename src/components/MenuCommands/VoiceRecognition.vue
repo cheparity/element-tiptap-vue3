@@ -71,6 +71,7 @@ const handleSuccess = (result: any) => {
     ElMessage.success('File uploaded successfully')
     recognitionResult.value = result.data.result.join(' ')
     isUploaded.value = true
+    editor.commands.focus()
     replaceNodeWithResult(recognitionResult.value)
 }
 

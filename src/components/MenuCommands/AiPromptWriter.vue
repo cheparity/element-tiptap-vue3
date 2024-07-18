@@ -1,5 +1,5 @@
 <template>
-    <div class="el-tiptap-editor__ai-text" style="width: 650px;">
+    <div class="el-tiptap-editor__ai-text" style="width: 650px">
         <div style="margin-bottom: 15px">{{ t('editor.extensions.Ai.chat.prompt') }}</div>
         <!-- 加载框 -->
         <el-skeleton v-if="clickedGenerate" :loading="loading" style="width: 100%; margin-bottom: 20px" animated>
@@ -20,7 +20,7 @@
         ></el-input>
 
         <div class="left-right">
-            <el-select v-model="selectedStyle" placeholder="Tone style">
+            <el-select v-model="selectedStyle" placeholder="Tone style" @click="editor.commands.blur()">
                 <el-option v-for="style in textStyles" :key="style" :label="style" :value="style"></el-option>
             </el-select>
             <el-button v-if="!clickedGenerate" round style="width: auto; margin-left: 100px" @click="generateText"

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
 
 const api = axios.create({
     baseURL: 'http://101.201.173.118/',

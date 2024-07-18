@@ -1,42 +1,47 @@
 <template>
-        <el-dropdown placement="bottom" @command="handleCommand" trigger="click">
-            <div>
-                <command-button
-                    :enable-tooltip="enableTooltip"
-                    :tooltip="t('editor.extensions.Ai.tooltip')"
-                    :readonly="isCodeViewMode"
-                    icon="ai"
-                    :button-icon="buttonIcon"
-                />
-            </div>
-            <template #dropdown>
-                <el-dropdown-menu>
-                    <el-dropdown-item :icon="Aim" command="summarize">{{ t('editor.extensions.Ai.chat.summarize') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="Sugar" command="polish">{{ t('editor.extensions.Ai.chat.polish') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="Switch" command="translate">{{ t('editor.extensions.Ai.chat.translate') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="Finished" command="correct">{{ t('editor.extensions.Ai.chat.correct') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="EditPen" command="continuation">
-                        {{ t('editor.extensions.Ai.chat.continuation')
-                        }}
-                    </el-dropdown-item>
-                    <el-dropdown-item divided />
-                    <el-dropdown-item :icon="Mic" command="voiceRecognition">{{ t('editor.extensions.Ai.chat.asr') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="Picture" command="imageGen">{{ t('editor.extensions.Ai.chat.imageGen') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="Promotion" command="promptWriting">
-                        {{ t('editor.extensions.Ai.chat.promptWriting') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item :icon="MagicStick" command="generateTable">
-                        {{ t('editor.extensions.Ai.chat.generateTable') }}
-                    </el-dropdown-item>
-                </el-dropdown-menu>
-            </template>
-        </el-dropdown>
+    <el-dropdown placement="bottom" @command="handleCommand" trigger="click">
+        <div>
+            <command-button
+                :enable-tooltip="enableTooltip"
+                :tooltip="t('editor.extensions.Ai.tooltip')"
+                :readonly="isCodeViewMode"
+                icon="ai"
+                :button-icon="buttonIcon"
+            />
+        </div>
+        <template #dropdown>
+            <el-dropdown-menu>
+                <el-dropdown-item :icon="Aim" command="summarize"
+                    >{{ t('editor.extensions.Ai.chat.summarize') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Sugar" command="polish"
+                    >{{ t('editor.extensions.Ai.chat.polish') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Switch" command="translate"
+                    >{{ t('editor.extensions.Ai.chat.translate') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Finished" command="correct"
+                    >{{ t('editor.extensions.Ai.chat.correct') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="EditPen" command="continuation">
+                    {{ t('editor.extensions.Ai.chat.continuation') }}
+                </el-dropdown-item>
+                <el-dropdown-item divided />
+                <el-dropdown-item :icon="Mic" command="voiceRecognition"
+                    >{{ t('editor.extensions.Ai.chat.asr') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Picture" command="imageGen"
+                    >{{ t('editor.extensions.Ai.chat.imageGen') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="Promotion" command="promptWriting">
+                    {{ t('editor.extensions.Ai.chat.promptWriting') }}
+                </el-dropdown-item>
+                <el-dropdown-item :icon="MagicStick" command="generateTable">
+                    {{ t('editor.extensions.Ai.chat.generateTable') }}
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </template>
+    </el-dropdown>
 
     <!-- Dialogs -->
     <AiDialog
@@ -55,16 +60,11 @@
         :editor="editor"
         :content="voiceContent"
     />
-    <AiImage
-        ref="aiImage"
-        @onClose="closeAiImageDialog"
-        v-show="aiImageDialogVisible"
-        :editor="editor"
-    />
+    <AiImage ref="aiImage" @onClose="closeAiImageDialog" v-if="aiImageDialogVisible" :editor="editor" />
     <AiPromptWriter
         ref="aiPromptWriter"
         @onClose="closeAiPromptWriterDialog"
-        v-show="aiPromptWriterDialogVisible"
+        v-if="aiPromptWriterDialogVisible"
         :editor="editor"
     />
 </template>
@@ -84,7 +84,6 @@ import AiPromptWriter from './AiPromptWriter.vue'
 const clearAllContents = () => {
     voiceContent.value = ''
     dialogText.value = ''
-
 }
 const aiPromptWriterDialogVisible = ref(false)
 const aiImageDialogVisible = ref(false)
@@ -94,21 +93,21 @@ const props = defineProps({
     enableTooltip: {
         type: Boolean,
         required: false,
-        default: true
+        default: true,
     },
     readonly: {
         type: Boolean,
         required: false,
-        default: false
+        default: false,
     },
     editor: {
         type: Editor,
-        required: true
+        required: true,
     },
     buttonIcon: {
         default: 'ai',
-        type: String
-    }
+        type: String,
+    },
 })
 
 const aiDialogVisible = ref(false)

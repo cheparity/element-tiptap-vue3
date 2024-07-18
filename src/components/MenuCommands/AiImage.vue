@@ -29,7 +29,12 @@
         ></el-input>
 
         <div class="left-right">
-            <el-select v-model="selectedStyle" placeholder="Style" style="margin-right: 20px">
+            <el-select
+                v-model="selectedStyle"
+                placeholder="Style"
+                style="margin-right: 20px"
+                @click="editor.commands.blur()"
+            >
                 <el-option v-for="style in imageStyles" :key="style" :label="style" :value="style"></el-option>
             </el-select>
             <el-button v-if="!clickedGenerate" round @click="generateImage">Generate image </el-button>

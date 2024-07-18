@@ -20,7 +20,7 @@
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
         "isolatedModules": false,
-        "skipLibCheck": true,
+        "skipLibCheck": true
     },
     "include": [
         "types/**/*",

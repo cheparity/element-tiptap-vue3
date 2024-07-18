@@ -1,9 +1,9 @@
 <template>
     <el-container direction="vertical">
         <el-header class="header">
-            <div class="header__left">
-                <img src="~demos/assets/logo.svg" class="logo" />
-            </div>
+<!--            <div class="header__left">-->
+<!--                <img src="~demos/assets/logo.svg" alt="logo" class="logo" />-->
+<!--            </div>-->
 
             <div class="header__right">
                 <router-link
@@ -111,21 +111,21 @@ const routes = [
 .header {
     display: flex;
     justify-content: center;
-    height: 20vh !important;
+    height: 15vh !important;
     padding-bottom: 20px;
     padding-top: 20px;
 
-    &__left {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: column;
-        margin-top: 50px;
-
-        .logo {
-            height: 50px;
-            margin-bottom: 20px;
-        }
-    }
+    //&__left {
+    //    align-items: flex-start;
+    //    display: flex;
+    //    flex-direction: column;
+    //    margin-top: 50px;
+    //
+    //    .logo {
+    //        height: 50px;
+    //        margin-bottom: 20px;
+    //    }
+    //}
 
     &__right {
         align-items: flex-start;
@@ -133,7 +133,7 @@ const routes = [
         flex-wrap: wrap;
         justify-content: center;
         margin-top: 50px;
-        margin-left: 10vw;
+        //margin-left: 10vw;
         width: 650px;
 
         .router-link {

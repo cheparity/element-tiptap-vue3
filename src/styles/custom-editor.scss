@@ -129,6 +129,8 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     color: $black-color;
+    max-height: 70vh;
+    overflow: auto;
     flex-grow: 1;
     padding: 30px 20px;
   }

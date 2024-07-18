@@ -11,74 +11,79 @@
         </div>
         <template #dropdown>
             <el-dropdown-menu>
-                <!-- 为了跟下面的语音识别风格统一，都是四个字 -->
-                <el-dropdown-item :icon="Aim" command="summarize"
-                    >{{ t('editor.extensions.Ai.chat.summarize') }}
+                <el-dropdown-item :icon="Aim" command="summarize">{{ t('editor.extensions.Ai.chat.summarize') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Sugar" command="polish"
-                    >{{ t('editor.extensions.Ai.chat.polish') }}
+                <el-dropdown-item :icon="Sugar" command="polish">{{ t('editor.extensions.Ai.chat.polish') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Switch" command="translate"
-                    >{{ t('editor.extensions.Ai.chat.translate') }}
+                <el-dropdown-item :icon="Switch" command="translate">{{ t('editor.extensions.Ai.chat.translate') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Finished" command="correct"
-                    >{{ t('editor.extensions.Ai.chat.correct') }}
+                <el-dropdown-item :icon="Finished" command="correct">{{ t('editor.extensions.Ai.chat.correct') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="EditPen" command="continuation">
-                    {{ t('editor.extensions.Ai.chat.continuation') }}
+                <el-dropdown-item :icon="EditPen" command="continuation">{{ t('editor.extensions.Ai.chat.continuation')
+                    }}
                 </el-dropdown-item>
-                <!-- 分割 -->
                 <el-dropdown-item divided />
-                <el-dropdown-item :icon="Mic" command="voiceRecognition"
-                    >{{ t('editor.extensions.Ai.chat.asr') }}
+                <el-dropdown-item :icon="Mic" command="voiceRecognition">{{ t('editor.extensions.Ai.chat.asr') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Picture" command="imageGen"
-                    >{{ t('editor.extensions.Ai.chat.imageGen') }}
+                <el-dropdown-item :icon="Picture" command="imageGen">{{ t('editor.extensions.Ai.chat.imageGen') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Promotion" command="promptWriting"
-                    >{{ t('editor.extensions.Ai.chat.promptWriting') }}
+                <el-dropdown-item :icon="Promotion" command="promptWriting">
+                    {{ t('editor.extensions.Ai.chat.promptWriting') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="MagicStick" command="generateTable"
-                    >{{ t('editor.extensions.Ai.chat.generateTable') }}
+                <el-dropdown-item :icon="MagicStick" command="generateTable">
+                    {{ t('editor.extensions.Ai.chat.generateTable') }}
                 </el-dropdown-item>
             </el-dropdown-menu>
         </template>
     </el-dropdown>
-    <!-- Dialog 区域 -->
+    <!-- Dialogs -->
     <AiDialog
+        ref="aiDialog"
         v-if="aiDialogVisible"
         :text="dialogText"
         :editor="editor"
-        @onClose="() => closeChatDialog()"
-        @onCopy="(content) => copyContent(content)"
-        @onAccept="(content) => acceptText(content)"
+        @onClose="closeChatDialog"
+        @onCopy="copyContent"
+        @onAccept="acceptText"
     />
     <VoiceRecognition
-        @onClose="() => (voiceRecognitionDialogVisible = false)"
+        ref="voiceRecognition"
+        @onClose="closeVoiceRecognitionDialog"
         v-if="voiceRecognitionDialogVisible"
         :editor="editor"
         :content="voiceContent"
     />
-    <AiImage @onClose="() => (aiImageDialogVisible = false)" v-show="aiImageDialogVisible" :editor="editor" />
+    <AiImage
+        ref="aiImage"
+        @onClose="closeAiImageDialog"
+        v-show="aiImageDialogVisible"
+        :editor="editor"
+    />
     <AiPromptWriter
-        @onClose="() => (aiPromptWriterDialogVisible = false)"
+        ref="aiPromptWriter"
+        @onClose="closeAiPromptWriterDialog"
         v-show="aiPromptWriterDialogVisible"
         :editor="editor"
     />
 </template>
 
 <script setup lang="ts">
-import { computed, inject, readonly, ref } from 'vue'
-import { Editor } from '@tiptap/vue-3'
+import { computed, inject, ref } from 'vue'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
-import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
+import { Editor } from '@tiptap/vue-3'
 import CommandButton from './CommandButton.vue'
 import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion, Picture } from '@element-plus/icons-vue'
 import api from '@/api'
+import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
 import VoiceRecognition from './VoiceRecognition.vue'
 import AiImage from './AiImage.vue'
 import AiPromptWriter from './AiPromptWriter.vue'
 
+const clearAllContents = () => {
+    voiceContent.value = ''
+    dialogText.value = ''
+
+}
 const aiPromptWriterDialogVisible = ref(false)
 const aiImageDialogVisible = ref(false)
 const voiceRecognitionDialogVisible = ref(false)
@@ -87,27 +92,59 @@ const props = defineProps({
     enableTooltip: {
         type: Boolean,
         required: false,
-        default: true,
+        default: true
     },
     readonly: {
         type: Boolean,
         required: false,
-        default: false,
+        default: false
     },
     editor: {
         type: Editor,
-        required: true,
+        required: true
     },
     buttonIcon: {
         default: 'ai',
-        type: String,
-    },
+        type: String
+    }
 })
 
-function closeChatDialog() {
+const aiDialogVisible = ref(false)
+const dialogText = ref<string>('')
+
+const t = inject('t')
+const enableTooltip = inject('enableTooltip', true)
+const isCodeViewMode = inject('isCodeViewMode', false)
+const selectedContent = computed((): string => {
+    const state = props.editor.state
+    let text = ''
+    if (state) {
+        const { selection } = state
+        text = state.doc.textBetween(selection.from, selection.to)
+    }
+    return text
+})
+
+const closeChatDialog = () => {
     aiDialogVisible.value = false
-    dialogText.value = ''
+    clearAllContents()
 }
+
+const closeVoiceRecognitionDialog = () => {
+    voiceRecognitionDialogVisible.value = false
+    clearAllContents()
+}
+
+const closeAiImageDialog = () => {
+    aiImageDialogVisible.value = false
+    clearAllContents()
+}
+
+const closeAiPromptWriterDialog = () => {
+    aiPromptWriterDialogVisible.value = false
+    clearAllContents()
+}
+
 const copyContent = (content: string) => {
     navigator.clipboard
         .writeText(content)
@@ -116,48 +153,31 @@ const copyContent = (content: string) => {
         })
         .catch((err) => {
             console.error('复制失败', err)
-            ElMessage.success('😭复制失败了，稍后重试一下吧！')
+            ElMessage.error('😭复制失败了，稍后重试一下吧！')
         })
         .finally(() => {
             dialogText.value = ''
             aiDialogVisible.value = false
         })
 }
+
 const acceptText = (result: string) => {
     const editor = props.editor
     editor.commands.insertContent(result)
     dialogText.value = ''
     aiDialogVisible.value = false
 }
-const t = inject('t')
-const enableTooltip = inject('enableTooltip', true)
-const isCodeViewMode = inject('isCodeViewMode', false)
-const aiDialogVisible = ref(false)
-const selectedContent = computed((): string => {
-    const state = props.editor.state
-    let text = ''
-    if (state) {
-        const { selection } = state
-        text = state.doc.textBetween(selection.from, selection.to)
-    }
 
-    return text
-})
-
-const dialogText = ref<string>('')
-
-function handleCommand(command: string) {
+const handleCommand = (command: string) => {
+    props.editor.commands.blur()
     switch (command) {
         case 'summarize':
-            // 把下面这个函数传进
             if (selectedContent.value === '') {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
             aiDialogVisible.value = true
-            api.abstract({
-                content: selectedContent.value,
-            }).then((ret) => {
+            api.abstract({ content: selectedContent.value }).then((ret) => {
                 dialogText.value = ret
             })
             break
@@ -167,9 +187,7 @@ function handleCommand(command: string) {
                 return
             }
             aiDialogVisible.value = true
-            api.polish({
-                content: selectedContent.value,
-            }).then((ret) => {
+            api.polish({ content: selectedContent.value }).then((ret) => {
                 dialogText.value = ret
             })
             break
@@ -179,13 +197,9 @@ function handleCommand(command: string) {
                 return
             }
             aiDialogVisible.value = true
-            api.translate({
-                content: selectedContent.value,
-                language: 'en',
-            }).then((ret) => {
+            api.translate({ content: selectedContent.value, language: 'en' }).then((ret) => {
                 dialogText.value = ret
             })
-
             break
         case 'correct':
             if (selectedContent.value === '') {
@@ -193,12 +207,9 @@ function handleCommand(command: string) {
                 return
             }
             aiDialogVisible.value = true
-            api.correct({
-                content: selectedContent.value,
-            }).then((ret) => {
+            api.correct({ content: selectedContent.value }).then((ret) => {
                 dialogText.value = ret
             })
-
             break
         case 'continuation':
             if (selectedContent.value === '') {
@@ -206,12 +217,9 @@ function handleCommand(command: string) {
                 return
             }
             aiDialogVisible.value = true
-            api.continueWrite({
-                content: selectedContent.value,
-            }).then((ret) => {
+            api.continueWrite({ content: selectedContent.value }).then((ret) => {
                 dialogText.value = ret
             })
-
             break
         case 'voiceRecognition':
             voiceRecognitionDialogVisible.value = true
@@ -228,13 +236,12 @@ function handleCommand(command: string) {
                 return
             }
             aiDialogVisible.value = true
-            api.generateTable({
-                content: selectedContent.value,
-            }).then((ret) => {
+            api.generateTable({ content: selectedContent.value }).then((ret) => {
                 dialogText.value = ret
             })
             break
         default:
+            console.error('Unknown command:', command)
     }
 }
 </script>

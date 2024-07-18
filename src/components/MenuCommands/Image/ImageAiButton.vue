@@ -86,7 +86,7 @@
     </div>
 </template>
 
-<script setup lang="js">
+<script setup>
 import {ref, inject} from 'vue'
 import {nodeViewProps} from '@tiptap/vue-3'
 import {ElMessage, ElPopover, ElDialog, ElSkeleton, ElSkeletonItem} from 'element-plus'

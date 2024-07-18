@@ -36,6 +36,20 @@ declare module '@tiptap/core' {
 const Ai = Extension.create<AiOptions>({
     name: 'ai',
 
+    onTransaction({  transaction }) {
+        // The editor state has changed.
+        console.log('onTransaction', transaction)
+    },
+    onFocus({ event }) {
+        // The editor is focused.
+        console.log('onFocus', event)
+    },
+    onBlur({ event }) {
+        // The editor isn’t focused anymore.
+        console.log('onBlur', event)
+        this.editor.commands.focus()
+    },
+
     addOptions() {
         return {
             types: ['textStyle'],

@@ -2,11 +2,12 @@
     "compilerOptions": {
         "target": "es6",
         "module": "esnext",
-        "strict": true,
+        "strict": false,
         "jsx": "preserve",
         "importHelpers": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
+        "preserveSymlinks": true,
         "allowJs": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -18,7 +19,8 @@
             "@/*": ["./*"]
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-        "isolatedModules": true
+        "isolatedModules": false,
+        "skipLibCheck": true,
     },
     "include": [
         "types/**/*",

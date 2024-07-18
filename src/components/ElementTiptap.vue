@@ -152,7 +152,7 @@ export default defineComponent({
         },
         editorProps: {
             type: Object as () => EditorProps,
-            default: () => {},
+            default: () => ({}),
         },
         charCountMax: {
             type: Number,

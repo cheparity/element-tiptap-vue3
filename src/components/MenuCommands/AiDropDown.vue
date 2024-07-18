@@ -157,8 +157,8 @@ const copyContent = (content: string) => {
             ElMessage.error('😭复制失败了，稍后重试一下吧！')
         })
         .finally(() => {
-            dialogText.value = ''
             aiDialogVisible.value = false
+            clearAllContents()
         })
 }
 

@@ -2,22 +2,28 @@
     <div class="el-tiptap-editor__right-sidebar">
         <div class="trigger-area" @mouseover="openSidebar" @mouseleave="closeSidebar"></div>
         <div class="sidebar" :class="{ open: isOpen }" @mouseover="openSidebar" @mouseleave="closeSidebar">
-            <el-tree-v2 :data="treeData" :height="300" :props="{ label: 'label', children: 'children' }" />
+            <h2 class="outline__title">TABLE OF CONTENTS</h2>
+            <el-tree class="sidebarTree"
+                     node-key="id"
+                     :default-expanded-keys="defaultExpandedKeys"
+                     :data="treeData"
+                     :props="{label: 'label', children: 'children' }"
+                     :height="650"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from 'vue'
-import { ElTreeV2 } from 'element-plus'
+import { ref, defineProps, onMounted, computed } from 'vue'
+import { ElTreeV2, ElTree } from 'element-plus'
 import { Editor } from '@tiptap/vue-3'
 
 const isOpen = ref(false)
 const props = defineProps({
     editor: {
         type: Editor,
-        required: true,
-    },
+        required: true
+    }
 })
 
 /**
@@ -31,10 +37,15 @@ const props = defineProps({
 const scrollToSelection = (editor: Editor): void => {
     const { node } = editor.view.domAtPos(editor.state.selection.anchor)
     if (node) {
-        ;(node as any).scrollIntoView?.(false)
+        (node as any).scrollIntoView?.(false)
     }
 }
-
+const defaultExpandedKeys = computed(() => {
+    // 默认展开一级标题
+    const keys = treeData.value.map((item) => item.id)
+    console.log(keys)
+    return keys
+})
 const loadHeadings = (): any[] => {
     const headings: any[] = []
     const editor = props.editor
@@ -59,7 +70,7 @@ const loadHeadings = (): any[] => {
                 text: node.textContent, // label内容
                 start,
                 end,
-                id,
+                id
             })
         }
     })
@@ -100,7 +111,7 @@ const mapHeadingsToTreeData = (
         const data = {
             id: id,
             label: text,
-            children: [],
+            children: []
         }
 
         allData.push(data)

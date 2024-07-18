@@ -47,7 +47,7 @@ const Ai = Extension.create<AiOptions>({
     onBlur({ event }) {
         // The editor isn’t focused anymore.
         console.log('onBlur', event)
-        this.editor.commands.focus()
+        // this.editor.commands.focus()
     },
 
     addOptions() {

@@ -21,12 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import {ref, defineEmits} from 'vue'
-import {ElMessage, ElUpload} from 'element-plus'
+import { ref, defineEmits } from 'vue'
+import { ElMessage, ElUpload } from 'element-plus'
 import api from '@/api'
-import {Close} from '@element-plus/icons-vue'
-import {Editor} from '@tiptap/vue-3'
-import {v4 as uuidv4} from 'uuid'
+import { Close } from '@element-plus/icons-vue'
+import { Editor } from '@tiptap/vue-3'
+import { v4 as uuidv4 } from 'uuid'
 
 const emits = defineEmits(['onClose'])
 
@@ -40,12 +40,10 @@ const isUploaded = ref(false)
 const recognitionResult = ref('')
 
 const uploadFile = async (request: any) => {
-    console.log('request', request)
     const uu_id = uuidv4()
     localStorage.setItem(uu_id, JSON.stringify(request))
     try {
         const file = request.file
-        console.log('Uploading file:', file)
         const base64 = await convertToBase64(file)
         const pureBase64 = base64.split(',')[1] // 去掉前缀
         const result = await api.voiceRecognize({
@@ -89,11 +87,9 @@ const beforeUpload = (file: File) => {
 }
 
 const replaceNodeWithResult = (result: string) => {
-    const {state, view} = props.editor
+    const { state, view } = props.editor
     const tr = state.tr
-    console.log(`output->props.editor`, props.editor)
-    console.log(`output->state, view, tr`, state, view, tr)
-    const {from, to} = state.selection
+    const { from, to } = state.selection
 
     const node = state.schema.text(result)
     tr.replaceWith(from, to, node)

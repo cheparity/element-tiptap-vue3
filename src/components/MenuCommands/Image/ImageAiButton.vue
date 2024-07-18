@@ -28,7 +28,7 @@
     </el-popover>
 
     <div v-show="ocrDialogVisible" class="el-tiptap__ocr-dialog-visible">
-        <el-dialog title="OCR结果">
+        <el-dialog title="OCR结果" v-model="ocrDialogVisible">
             <div class="dialog-content">
                 <el-skeleton :loading="loading" animated>
                     <template #template>
@@ -51,42 +51,34 @@
         </el-dialog>
     </div>
     <div v-show="odDialogVisible" class="el-tiptap__od-dialog-visible">
-        <el-dialog title="目标检测结果" width="600px">
-            <div class="dialog-content">
-                <el-skeleton :loading="loading" animated>
-                    <template #template>
-                        <el-skeleton :rows="10" />
-                    </template>
-                    <template #default>
-                        <div class="ocr-content">
-                            <div v-for="(item, index) in odResult" :key="index" class="ocr-item">
-                                <div class="ocr-item-header">
-                                    <span class="ocr-score">Score: {{ item.score }}</span>
-                                    <span class="ocr-keyword">{{ item.keyword }}</span>
-                                </div>
-                                <div
-                                    v-if="item.baike_info.baike_url || item.baike_info.image_url"
-                                    class="ocr-item-content"
+        <el-dialog title="目标检测结果" v-model="odDialogVisible">
+            <el-skeleton :loading="loading" animated>
+                <template #template>
+                    <el-skeleton :rows="10" />
+                </template>
+                <template #default>
+                    <div class="ocr-content">
+                        <div v-for="(item, index) in odResult" :key="index" class="ocr-item">
+                            <div class="ocr-item-header">
+                                <span class="ocr-score">Score: {{ item.score }}</span>
+                                <span class="ocr-keyword">{{ item.keyword }}</span>
+                            </div>
+                            <div v-if="item.baike_info.baike_url || item.baike_info.image_url" class="ocr-item-content">
+                                <a :href="item.baike_info.baike_url" target="_blank" v-if="item.baike_info.baike_url"
+                                    >百科链接</a
                                 >
-                                    <a
-                                        :href="item.baike_info.baike_url"
-                                        target="_blank"
-                                        v-if="item.baike_info.baike_url"
-                                        >百科链接</a
-                                    >
-                                    <a
-                                        style="margin-left: 5px"
-                                        v-if="item.baike_info.image_url"
-                                        :href="item.baike_info.image_url"
-                                        >图片链接</a
-                                    >
-                                    <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
-                                </div>
+                                <a
+                                    style="margin-left: 5px"
+                                    v-if="item.baike_info.image_url"
+                                    :href="item.baike_info.image_url"
+                                    >图片链接</a
+                                >
+                                <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
                             </div>
                         </div>
-                    </template>
-                </el-skeleton>
-            </div>
+                    </div>
+                </template>
+            </el-skeleton>
             <div class="dialog-footer">
                 <el-button round type="danger" @click="closeOd">关闭</el-button>
             </div>
@@ -132,11 +124,9 @@ const acceptResult = () => {
                 text: '',
             }
         })
-    console.log('accept result')
-}
+    }
 const closeOd = () => {
-    console.log('close od')
-    odDialogVisible.value = false
+        odDialogVisible.value = false
     odResult.value = []
 }
 const odDialogVisible = ref(false)
@@ -155,7 +145,6 @@ const menuItems = ref([{key: 'ocr', name: t('editor.extensions.Ai.image.ocr')}, 
 }])
 
 const openAiImageDialog = () => {
-    console.log('Open AI Image Dialog')
 
     const hidePopover = () => {
         if (popoverRef.value) {
@@ -178,25 +167,23 @@ const handleCommand = (item) => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
                     const base64_img = reader.result.split(',')[1] // 去掉前缀
-                    console.log(`output->base64_img`, base64_img)
-                    try {
+                                        try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.OCR({
                             base64_img,
                         })
 
-                        console.log(`output->ocrResponse`, ocrResponse.data)
-                        const ocrImageUrl = ocrResponse.data.image_url
+                                                const ocrImageUrl = ocrResponse.data.image_url
                         const ocrTexts = ocrResponse.data.texts.join(', ')
 
-                        console.log(`output->ocrImageUrl`, ocrImageUrl)
-                        // 插入 OCR 结果图片
+                                                // 插入 OCR 结果图片
                         // editor.chain().focus().deleteRange({ from: getPos(), to: getPos() + node.nodeSize }).setImage({ src: ocrImageUrl }).run()
                         ocrResult.value.image = ocrImageUrl
 
                         // 插入识别结果文字
                         // editor.chain().focus().insertContent(`<p>${ocrTexts}</p>`).run()
                         ocrResult.value.text = ocrTexts
+
 
                     } catch (ocrError) {
                         console.error('OCR 识别失败:', ocrError)
@@ -221,14 +208,12 @@ const handleCommand = (item) => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
                     const base64_img = reader.result.split(',')[1] // 去掉前缀
-                    console.log(`output->base64_img`, base64_img)
-                    try {
+                                        try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.objectDetect({
                             base64_img,
                         })
                         odResult.value = ocrResponse.data.result
-                        console.log(`output->ocrResponse`, odResult.value)
 
                     } catch (ocrError) {
                         console.error('OCR 识别失败:', ocrError)
@@ -249,17 +234,9 @@ const handleCommand = (item) => {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     width: 500px;
     max-width: 100%;
     display: flex;
-    flex-direction: column;
-    font-family: 'Arial', sans-serif;
-    animation: border-animation 2s infinite;
-    background-color: #e3f2fd; /* Light blue background color */
-    border: 1px solid #90caf9; /* Light blue border color */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 1000;
     height: 400px;
@@ -335,19 +312,12 @@ const handleCommand = (item) => {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     width: 500px;
     max-width: 100%;
     display: flex;
-    flex-direction: column;
-    font-family: 'Arial', sans-serif;
-    animation: border-animation 2s infinite;
-    background-color: #e3f2fd; /* Light blue background color */
-    border: 1px solid #90caf9; /* Light blue border color */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 1000;
+    height: 400px;
 
     custom-dialog {
         background-color: #e3f2fd; /* Light blue background color */

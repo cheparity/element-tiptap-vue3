@@ -124,7 +124,6 @@ const openSidebar = () => {
     mapHeadingsToTreeData(headings)
     // treeData取数组最后一个
     treeData.value = treeData.value.slice()
-    console.log('headings and treeData', headings, treeData.value)
     isOpen.value = true
 }
 
@@ -134,6 +133,5 @@ const closeSidebar = () => {
 
 onMounted(() => {
     const headings = loadHeadings()
-    console.log('headings', headings)
 })
 </script>

@@ -124,7 +124,6 @@ const copyContent = (content: string) => {
         })
 }
 const acceptText = (result: string) => {
-    console.log('Accept result', result)
     const editor = props.editor
     editor.commands.insertContent(result)
     dialogText.value = ''
@@ -139,8 +138,7 @@ const selectedContent = computed((): string => {
     let text = ''
     if (state) {
         const { selection } = state
-        text = state.doc.textBetween(selection.from, selection.to, '')
-        console.log('Selected text', text)
+        text = state.doc.textBetween(selection.from, selection.to)
     }
 
     return text
@@ -211,7 +209,6 @@ function handleCommand(command: string) {
             api.continueWrite({
                 content: selectedContent.value,
             }).then((ret) => {
-                console.log('generate table return', ret)
                 dialogText.value = ret
             })
 
@@ -238,7 +235,6 @@ function handleCommand(command: string) {
             })
             break
         default:
-            console.log(`Unknown command: ${command}`)
     }
 }
 </script>

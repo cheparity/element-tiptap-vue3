@@ -33,11 +33,9 @@
                 @click="acceptText"
                 >Accept Text</el-button
             >
-            <el-button type="danger" round style="width: auto; margin-left: 10px"
-                       @click="emits('onClose')"
-            >Close
-            </el-button
-            >
+            <el-button type="danger" round style="width: auto; margin-left: 10px" @click="emits('onClose')"
+                >Close
+            </el-button>
         </div>
     </div>
 </template>
@@ -75,7 +73,6 @@ const generateText = () => {
         style: selectedStyle.value,
     })
         .then((response) => {
-            console.log('response', response)
             result.value = response
         })
         .catch((err) => {

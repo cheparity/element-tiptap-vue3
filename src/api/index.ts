@@ -41,7 +41,6 @@ export default {
     //TODO 生成图片
     generateImage: async function (params: Object) {
         const data = (await api.post(`ai/pictures/generate/`, params)).data
-        console.log('data -> ', data)
         const taskId = data.data.primaryTaskId
         await delay(5000)
 

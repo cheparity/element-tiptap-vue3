@@ -78,7 +78,6 @@ const generateImage = () => {
     }).then((url) => {
         loading.value = false
         resultUrl.value = url
-        console.log('Generate image success')
     })
 }
 </script>

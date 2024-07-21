@@ -1,4 +1,5 @@
 import path from 'path'
+import dotenv from 'dotenv'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import ElementPlus from 'unplugin-element-plus/vite'
@@ -7,13 +8,15 @@ import copy from 'rollup-plugin-copy'
 import dts from 'vite-plugin-dts'
 const libDir = path.resolve(__dirname, 'lib')
 const srcDir = path.resolve(__dirname, 'src')
-
+dotenv.config()
 export default ({ mode }) => {
-    process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
-
+    // process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
     const IS_DEMO = process.env.VITE_BUILD_TARGET === 'demo'
 
     return defineConfig({
+        define: {
+            'process.env': process.env,
+        },
         plugins: [
             vue({
                 style: {

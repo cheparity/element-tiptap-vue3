@@ -43,7 +43,6 @@ const scrollToSelection = (editor: Editor): void => {
 const defaultExpandedKeys = computed(() => {
     // 默认展开一级标题
     const keys = treeData.value.map((item) => item.id)
-    console.log(keys)
     return keys
 })
 const loadHeadings = (): any[] => {

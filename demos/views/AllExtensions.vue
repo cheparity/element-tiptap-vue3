@@ -7,21 +7,60 @@
             output="html"
             :extensions="allExtensions"
             v-model:content="content2"
-            height="50vh"
             @onUpdate="onEditorUpdate"
         />
-        {{ content2 }}
-        <el-tiptap lang="en" output="json" :extensions="allExtensions" v-model:content="content2" />
+        <!-- {{ content2 }}
+        <el-tiptap lang="en" output="json" :extensions="allExtensions" v-model:content="content2" /> -->
     </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { ElButton } from 'element-plus'
+
 export default defineComponent({
     data() {
         return {
             content1: '<div equation="e = mc^2" data-type="block-equation"></div>',
-            content2: '',
+            content2:
+                '<h2 style="text-align: center">Edivator is a \n' +
+                '  <span style="color: #f44336"><em>GREAT </em></span>editor！\n' +
+                '</h2>\n' +
+                '<p>🔥 \n' +
+                '  <strong>Edivator </strong>🔥is a WYSIWYG rich-text editor using&nbsp; \n' +
+                '  <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/scrumpy/tiptap">baidu-paddlepaddle</a>&nbsp;and \n' +
+                '  <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/element-plus/element-plus">yi-chat</a>,\n' +
+                '  <img src="https://i.ibb.co/nbRN3S2/undraw-upload-87y9.png" alt="" title="" width="400" height="200" data-display="right" draggable="true"> which is easy to use, friendly to developers, fully extensible and clean in design.\n' +
+                '</p>\n' +
+                '<p>\n' +
+                '</p>\n' +
+                '<p style="text-align: right">👉Click on the image to get started image features 👉\n' +
+                '</p>\n' +
+                '<p>\n' +
+                '</p>\n' +
+                '<p>You can switch to \n' +
+                '  <strong>Code View </strong>💻 mode and toggle \n' +
+                '  <strong>Fullscreen</strong> 📺 in this demo.\n' +
+                '</p>\n' +
+                '<p>\n' +
+                '</p>\n' +
+                '<p>\n' +
+                '  <strong>Got questions or need help or feature request?</strong>\n' +
+                '</p>\n' +
+                '<p>🚀 \n' +
+                '  <strong>welcome to submit an </strong>\n' +
+                '  <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/Leecason/element-tiptap/issues"><strong>issue</strong></a> 😊\n' +
+                '</p>\n' +
+                "<p>I'm continuously working to add in new features.\n" +
+                '</p>\n' +
+                '<p>\n' +
+                '</p>\n' +
+                '<blockquote>\n' +
+                '  <p>This demo is simple, switch tab for more features.\n' +
+                '  </p>\n' +
+                '  <p>All demos source code: \n' +
+                '    <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/Leecason/element-tiptap/blob/master/demos/views/Index.vue">source code 🔗</a>\n' +
+                '  </p>\n' +
+                '</blockquote>',
         }
     },
 })
@@ -86,6 +125,7 @@ import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
 // load all highlight.js languages
 import { lowlight } from 'lowlight'
+
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
 lowlight.registerLanguage('js', js)

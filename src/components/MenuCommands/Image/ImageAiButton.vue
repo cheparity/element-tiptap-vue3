@@ -61,13 +61,13 @@
                             </div>
                             <div v-if="item.baike_info.baike_url || item.baike_info.image_url" class="ocr-item-content">
                                 <a :href="item.baike_info.baike_url" target="_blank" v-if="item.baike_info.baike_url"
-                                >百科链接</a
+                                    >百科链接</a
                                 >
                                 <a
                                     style="margin-left: 5px"
                                     v-if="item.baike_info.image_url"
                                     :href="item.baike_info.image_url"
-                                >图片链接</a
+                                    >图片链接</a
                                 >
                                 <p v-if="item.baike_info.description">{{ item.baike_info.description }}</p>
                             </div>
@@ -94,12 +94,12 @@ const props = defineProps({
     updateAttrs: nodeViewProps['updateAttributes'],
     buttonIcon: {
         type: String,
-        default: ''
-    }
+        default: '',
+    },
 })
 const ocrResult = ref({
     image: '',
-    text: ''
+    text: '',
 })
 const odResult = ref([])
 const acceptResult = () => {
@@ -117,7 +117,7 @@ const acceptResult = () => {
             //清除数据
             ocrResult.value = {
                 image: '',
-                text: ''
+                text: '',
             }
         })
 }
@@ -135,10 +135,13 @@ const enableTooltip = inject('enableTooltip', true)
 
 const popoverRef = ref(null)
 const currItem = ref('')
-const menuItems = ref([{ key: 'ocr', name: t('editor.extensions.Ai.image.ocr') }, {
-    key: 'od',
-    name: t('editor.extensions.Ai.image.od')
-}])
+const menuItems = ref([
+    { key: 'ocr', name: t('editor.extensions.Ai.image.ocr') },
+    {
+        key: 'od',
+        name: t('editor.extensions.Ai.image.od'),
+    },
+])
 
 const handleCommand = (item) => {
     currItem.value = item
@@ -146,20 +149,20 @@ const handleCommand = (item) => {
     // Handle command execution logic based on the item
     const node = props.node
     if (item.key === 'ocr') {
+        // debugger
         // Your OCR logic here
         const url = node.attrs.src
         fetch(url)
-            .then(res => res.blob())
-            .then(blob => {
+            .then((res) => res.blob())
+            .then((blob) => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
                     const base64_img = (reader.result as string).split(',')[1] // 去掉前缀
                     try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.OCR({
-                            base64_img
+                            base64_img,
                         })
-
                         const ocrImageUrl = ocrResponse.data.image_url
                         const ocrTexts = ocrResponse.data.texts.join(', ')
 
@@ -170,11 +173,9 @@ const handleCommand = (item) => {
                         // 插入识别结果文字
                         // editor.chain().focus().insertContent(`<p>${ocrTexts}</p>`).run()
                         ocrResult.value.text = ocrTexts
-
-
                     } catch (ocrError) {
                         console.error('OCR 识别失败:', ocrError)
-                        ElMessage.error('OCR 识别失败，是不是没有文字呢？')
+                        // ElMessage.error('OCR 识别失败，是不是没有文字呢？')
                         ocrDialogVisible.value = false
                     }
                 }
@@ -190,18 +191,17 @@ const handleCommand = (item) => {
         const url = node.attrs.src
 
         fetch(url)
-            .then(res => res.blob())
-            .then(blob => {
+            .then((res) => res.blob())
+            .then((blob) => {
                 const reader = new FileReader()
                 reader.onloadend = async () => {
                     const base64_img = (reader.result as string).split(',')[1] // 去掉前缀
                     try {
                         // 调用 OCR 接口
                         const ocrResponse = await api.objectDetect({
-                            base64_img
+                            base64_img,
                         })
                         odResult.value = ocrResponse.data.result
-
                     } catch (ocrError) {
                         console.error('OCR 识别失败:', ocrError)
                     }

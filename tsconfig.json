@@ -14,7 +14,7 @@
         "sourceMap": true,
         "baseUrl": "./src",
         "typeRoots": ["./types", "./node_modules/@types"],
-        "types": ["element-plus/global"],
+        "types": ["element-plus/global", "node"],
         "paths": {
             "@/*": ["./*"]
         },

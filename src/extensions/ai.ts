@@ -36,7 +36,7 @@ declare module '@tiptap/core' {
 const Ai = Extension.create<AiOptions>({
     name: 'ai',
 
-    onTransaction({  transaction }) {
+    onTransaction({ transaction }) {
         // The editor state has changed.
     },
     onFocus({ event }) {
@@ -44,8 +44,7 @@ const Ai = Extension.create<AiOptions>({
     },
     onBlur({ event }) {
         // The editor isn’t focused anymore.
-        if(!document.querySelector('.el-select'))
-            this.editor.commands.focus()
+        if (!document.querySelector('.el-select')) this.editor.commands.focus()
     },
 
     addOptions() {

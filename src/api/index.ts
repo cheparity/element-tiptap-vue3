@@ -1,7 +1,10 @@
 import axios from 'axios'
-
+console.log('process env', process.env)
+// const edivator_backend_api = process.end.EDIVATOR_BACKEND_API
+// const edivator_backend_api = 'http://101.201.173.118/api/'
+const edivator_backend_api = 'http://localhost:8000/api/'
 const api = axios.create({
-    baseURL: 'http://101.201.173.118/',
+    baseURL: edivator_backend_api,
     withCredentials: false,
     timeout: 50000,
 })

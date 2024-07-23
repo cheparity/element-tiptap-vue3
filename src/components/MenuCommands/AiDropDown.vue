@@ -12,26 +12,26 @@
         <template #dropdown>
             <el-dropdown-menu>
                 <el-dropdown-item :icon="Aim" command="summarize"
-                    >{{ t('editor.extensions.Ai.chat.summarize') }}
+                >{{ t('editor.extensions.Ai.chat.summarize') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Sugar" command="polish"
-                    >{{ t('editor.extensions.Ai.chat.polish') }}
+                >{{ t('editor.extensions.Ai.chat.polish') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Switch" command="translate"
-                    >{{ t('editor.extensions.Ai.chat.translate') }}
+                >{{ t('editor.extensions.Ai.chat.translate') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Finished" command="correct"
-                    >{{ t('editor.extensions.Ai.chat.correct') }}
+                >{{ t('editor.extensions.Ai.chat.correct') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="EditPen" command="continuation">
                     {{ t('editor.extensions.Ai.chat.continuation') }}
                 </el-dropdown-item>
                 <el-dropdown-item divided />
                 <el-dropdown-item :icon="Mic" command="voiceRecognition"
-                    >{{ t('editor.extensions.Ai.chat.asr') }}
+                >{{ t('editor.extensions.Ai.chat.asr') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Picture" command="imageGen"
-                    >{{ t('editor.extensions.Ai.chat.imageGen') }}
+                >{{ t('editor.extensions.Ai.chat.imageGen') }}
                 </el-dropdown-item>
                 <el-dropdown-item :icon="Promotion" command="promptWriting">
                     {{ t('editor.extensions.Ai.chat.promptWriting') }}
@@ -60,11 +60,23 @@
         :editor="editor"
         :content="voiceContent"
     />
-    <AiImage ref="aiImage" @onClose="closeAiImageDialog" v-if="aiImageDialogVisible" :editor="editor" />
+    <AiImage
+        ref="aiImage"
+        @onClose="closeAiImageDialog"
+        v-if="aiImageDialogVisible"
+        :editor="editor"
+    />
     <AiPromptWriter
         ref="aiPromptWriter"
         @onClose="closeAiPromptWriterDialog"
         v-if="aiPromptWriterDialogVisible"
+        :editor="editor"
+    />
+    <AiTranslate
+        v-if="aiTranslateDialogVisible"
+        @onClose="closeAiTranslateDialog"
+        @onCopy="copyContent"
+        @onAccept="acceptText"
         :editor="editor"
     />
 </template>
@@ -80,11 +92,13 @@ import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
 import VoiceRecognition from './VoiceRecognition.vue'
 import AiImage from './AiImage.vue'
 import AiPromptWriter from './AiPromptWriter.vue'
+import AiTranslate from './AiTranslate.vue'
 
 const clearAllContents = () => {
     voiceContent.value = ''
     dialogText.value = ''
 }
+const aiTranslateDialogVisible = ref(false)
 const aiPromptWriterDialogVisible = ref(false)
 const aiImageDialogVisible = ref(false)
 const voiceRecognitionDialogVisible = ref(false)
@@ -93,21 +107,21 @@ const props = defineProps({
     enableTooltip: {
         type: Boolean,
         required: false,
-        default: true,
+        default: true
     },
     readonly: {
         type: Boolean,
         required: false,
-        default: false,
+        default: false
     },
     editor: {
         type: Editor,
-        required: true,
+        required: true
     },
     buttonIcon: {
         default: 'ai',
-        type: String,
-    },
+        type: String
+    }
 })
 
 const aiDialogVisible = ref(false)
@@ -138,6 +152,11 @@ const closeVoiceRecognitionDialog = () => {
 
 const closeAiImageDialog = () => {
     aiImageDialogVisible.value = false
+    clearAllContents()
+}
+
+const closeAiTranslateDialog = () => {
+    aiTranslateDialogVisible.value = false
     clearAllContents()
 }
 
@@ -197,10 +216,7 @@ const handleCommand = (command: string) => {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
-            aiDialogVisible.value = true
-            api.translate({ content: selectedContent.value, language: 'en' }).then((ret) => {
-                dialogText.value = ret
-            })
+            aiTranslateDialogVisible.value = true
             break
         case 'correct':
             if (selectedContent.value === '') {

@@ -234,16 +234,7 @@ const allExtensions = [
     Print.configure({ bubble: true }),
     SelectAll.configure({ bubble: true }),
     Fullscreen.configure({ bubble: true }),
-    CodeView.configure({
-        bubble: true,
-        codemirror,
-        codemirrorOptions: {
-            styleActiveLine: true,
-            autoCloseTags: true,
-        },
-    }),
     Gapcursor,
-    CodeBlock,
     Dropcursor,
 ]
 </script>

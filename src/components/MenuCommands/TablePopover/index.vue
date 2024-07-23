@@ -179,6 +179,9 @@ export default defineComponent({
                 cols: col,
                 withHeaderRow: true,
             })
+            setTimeout(() => {
+                document.querySelector('.ProseMirror').innerHTML += '<p></p>'
+            }, 400)
 
             this.hidePopover()
         },

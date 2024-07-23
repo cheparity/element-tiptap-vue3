@@ -79,7 +79,7 @@ export default {
                 buttons: {
                     insert_image: {
                         tooltip: '插入图片',
-                        external: '通过 URL 插入图片',
+                        external: '通过链接插入图片',
                         upload: '上传图片',
                     },
                     remove_image: {

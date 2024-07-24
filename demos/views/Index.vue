@@ -36,7 +36,7 @@
         </el-footer>
 
         <a
-            href="https://github.com/Leecason/element-tiptap"
+            href="https://github.com/cheparity/element-tiptap-vue3"
             class="github-corner"
             aria-label="View source on GitHub"
             target="_blank"

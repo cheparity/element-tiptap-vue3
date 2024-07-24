@@ -10,6 +10,8 @@
 
 <h3 align="center">Element Tiptap Editor</h3>
 
+**NOTE** This is the version folk by Niyuta, the special version for competition.
+
 A WYSIWYG rich-text editor using [tiptap](https://github.com/ueberdosis/tiptap) and [Element Plus](https://github.com/element-plus/element-plus) for Vue3
 
 that's easy to use, friendly to developers, fully extensible and clean in design.

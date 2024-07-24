@@ -1,6 +1,6 @@
 {
     "name": "element-tiptap-vue3-niyuta",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "Rich-text editor build by baidu api and tiptap",
     "author": "niyuta",
     "scripts": {

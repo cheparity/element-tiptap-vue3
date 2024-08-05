@@ -44,7 +44,7 @@ const Ai = Extension.create<AiOptions>({
     },
     onBlur({ event }) {
         // The editor isn’t focused anymore.
-        if (!document.querySelector('.el-select')) this.editor.commands.focus()
+        // if (!document.querySelector('.el-select')) this.editor.commands.focus()
     },
 
     addOptions() {

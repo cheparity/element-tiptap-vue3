@@ -9,33 +9,41 @@
                 :button-icon="buttonIcon"
             />
         </div>
+
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item :icon="Aim" command="summarize"
-                >{{ t('editor.extensions.Ai.chat.summarize') }}
+                <el-dropdown-item :icon="Aim" command="summarize">
+                    {{ t('editor.extensions.Ai.chat.summarize') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Sugar" command="polish"
-                >{{ t('editor.extensions.Ai.chat.polish') }}
+
+                <el-dropdown-item :icon="Sugar" command="polish">
+                    {{ t('editor.extensions.Ai.chat.polish') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Switch" command="translate"
-                >{{ t('editor.extensions.Ai.chat.translate') }}
+
+                <el-dropdown-item :icon="Switch" command="translate">
+                    {{ t('editor.extensions.Ai.chat.translate') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Finished" command="correct"
-                >{{ t('editor.extensions.Ai.chat.correct') }}
+
+                <el-dropdown-item :icon="Finished" command="correct">
+                    {{ t('editor.extensions.Ai.chat.correct') }}
                 </el-dropdown-item>
+
                 <el-dropdown-item :icon="EditPen" command="continuation">
                     {{ t('editor.extensions.Ai.chat.continuation') }}
                 </el-dropdown-item>
                 <el-dropdown-item divided />
-                <el-dropdown-item :icon="Mic" command="voiceRecognition"
-                >{{ t('editor.extensions.Ai.chat.asr') }}
+                <el-dropdown-item :icon="Mic" command="voiceRecognition">
+                    {{ t('editor.extensions.Ai.chat.asr') }}
                 </el-dropdown-item>
-                <el-dropdown-item :icon="Picture" command="imageGen"
-                >{{ t('editor.extensions.Ai.chat.imageGen') }}
+
+                <el-dropdown-item :icon="Picture" command="imageGen">
+                    {{ t('editor.extensions.Ai.chat.imageGen') }}
                 </el-dropdown-item>
+
                 <el-dropdown-item :icon="Promotion" command="promptWriting">
                     {{ t('editor.extensions.Ai.chat.promptWriting') }}
                 </el-dropdown-item>
+
                 <el-dropdown-item :icon="MagicStick" command="generateTable">
                     {{ t('editor.extensions.Ai.chat.generateTable') }}
                 </el-dropdown-item>
@@ -43,7 +51,6 @@
         </template>
     </el-dropdown>
 
-    <!-- Dialogs -->
     <AiDialog
         ref="aiDialog"
         v-if="aiDialogVisible"
@@ -53,6 +60,7 @@
         @onCopy="copyContent"
         @onAccept="acceptText"
     />
+
     <VoiceRecognition
         ref="voiceRecognition"
         @onClose="closeVoiceRecognitionDialog"
@@ -60,12 +68,7 @@
         :editor="editor"
         :content="voiceContent"
     />
-    <AiImage
-        ref="aiImage"
-        @onClose="closeAiImageDialog"
-        v-if="aiImageDialogVisible"
-        :editor="editor"
-    />
+    <AiImage ref="aiImage" @onClose="closeAiImageDialog" v-if="aiImageDialogVisible" :editor="editor" />
     <AiPromptWriter
         ref="aiPromptWriter"
         @onClose="closeAiPromptWriterDialog"
@@ -88,6 +91,7 @@ import { Editor } from '@tiptap/vue-3'
 import CommandButton from './CommandButton.vue'
 import { Sugar, Aim, EditPen, Switch, Finished, Mic, MagicStick, Promotion, Picture } from '@element-plus/icons-vue'
 import api from '@/api'
+import { eventBus } from '@/eventBus'
 import AiDialog from '@/components/MenuCommands/ElementAiDialog.vue'
 import VoiceRecognition from './VoiceRecognition.vue'
 import AiImage from './AiImage.vue'
@@ -107,25 +111,28 @@ const props = defineProps({
     enableTooltip: {
         type: Boolean,
         required: false,
-        default: true
+        default: true,
     },
     readonly: {
         type: Boolean,
         required: false,
-        default: false
+        default: false,
     },
     editor: {
         type: Editor,
-        required: true
+        required: true,
     },
     buttonIcon: {
         default: 'ai',
-        type: String
-    }
+        type: String,
+    },
 })
 
 const aiDialogVisible = ref(false)
 const dialogText = ref<string>('')
+const lastCommand = ref<string>('')
+const lastSelectedContent = ref<string>('')
+const selectedRange = ref({ from: 0, to: 0 })
 
 const t = inject('t')
 const enableTooltip = inject('enableTooltip', true)
@@ -136,6 +143,7 @@ const selectedContent = computed((): string => {
     if (state) {
         const { selection } = state
         text = state.doc.textBetween(selection.from, selection.to)
+        selectedRange.value = { from: selection.from, to: selection.to }
     }
     return text
 })
@@ -181,61 +189,92 @@ const copyContent = (content: string) => {
         })
 }
 
-const acceptText = (result: string) => {
+const acceptText = (result: string, range: { from: number; to: number }) => {
     const editor = props.editor
-    editor.commands.insertContent(result)
+    editor.commands.deleteRange(range)
+    editor.commands.insertContentAt(range.from, result)
     dialogText.value = ''
     aiDialogVisible.value = false
 }
 
-const handleCommand = (command: string) => {
+const regenerate = () => {
+    if (!lastSelectedContent.value) {
+        ElMessage.warning('请先选择要处理的内容！')
+        return
+    }
+    closeChatDialog()
+    handleCommand(lastCommand.value, true)
+}
+
+const handleCommand = (command: string, isRegenerate = false) => {
     props.editor.commands.blur()
+    lastCommand.value = command
+    if (isRegenerate !== true) {
+        lastSelectedContent.value = selectedContent.value
+    }
+
     switch (command) {
         case 'summarize':
-            if (selectedContent.value === '') {
+            if (!lastSelectedContent.value) {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
-            aiDialogVisible.value = true
-            api.abstract({ content: selectedContent.value }).then((ret) => {
-                dialogText.value = ret
+            api.abstract({ content: lastSelectedContent.value }).then((ret) => {
+                eventBus.emit('addAiHistory', {
+                    type: 'summarize',
+                    content: ret,
+                    range: selectedRange.value,
+                    origin: lastSelectedContent.value,
+                })
             })
             break
         case 'polish':
-            if (selectedContent.value === '') {
+            if (!lastSelectedContent.value) {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
-            aiDialogVisible.value = true
-            api.polish({ content: selectedContent.value }).then((ret) => {
-                dialogText.value = ret
+            api.polish({ content: lastSelectedContent.value }).then((ret) => {
+                eventBus.emit('addAiHistory', {
+                    type: 'polish',
+                    content: ret,
+                    range: selectedRange.value,
+                    origin: lastSelectedContent.value,
+                })
             })
             break
         case 'translate':
-            if (selectedContent.value === '') {
+            if (!lastSelectedContent.value) {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
             aiTranslateDialogVisible.value = true
             break
         case 'correct':
-            if (selectedContent.value === '') {
+            if (!lastSelectedContent.value) {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
-            aiDialogVisible.value = true
-            api.correct({ content: selectedContent.value }).then((ret) => {
-                dialogText.value = ret
+            api.correct({ content: lastSelectedContent.value }).then((ret) => {
+                eventBus.emit('addAiHistory', {
+                    type: 'correct',
+                    content: ret,
+                    range: selectedRange.value,
+                    origin: lastSelectedContent.value,
+                })
             })
             break
         case 'continuation':
-            if (selectedContent.value === '') {
+            if (!lastSelectedContent.value) {
                 ElMessage.warning('请先选择要处理的内容！')
                 return
             }
-            aiDialogVisible.value = true
-            api.continueWrite({ content: selectedContent.value }).then((ret) => {
-                dialogText.value = ret
+            api.continueWrite({ content: lastSelectedContent.value }).then((ret) => {
+                eventBus.emit('addAiHistory', {
+                    type: 'continuation',
+                    content: ret,
+                    range: selectedRange.value,
+                    origin: lastSelectedContent.value,
+                })
             })
             break
         case 'voiceRecognition':
@@ -257,8 +296,6 @@ const handleCommand = (command: string) => {
                 dialogText.value = ret
             })
             break
-        default:
-            console.error('Unknown command:', command)
     }
 }
 </script>

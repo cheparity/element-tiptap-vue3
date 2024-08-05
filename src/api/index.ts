@@ -17,32 +17,60 @@ function delay(ms: number) {
 export default {
     // 文本摘要
     abstract: async function (params: { content: string }) {
-        return (await api.post(`ai/chat/summarize/`, params)).data.summary
+        return (await api.post(`ai/chat/summarize/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.summary
     },
     // 文本修饰
     polish: async function (params: { content: string }) {
-        return (await api.post(`ai/chat/polish/`, params)).data.polished
+        return (await api.post(`ai/chat/polish/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.polished
     },
     // 翻译
     translate: async function (params: { content: string; language: string }) {
-        return (await api.post(`ai/chat/translate/`, params)).data.translated
+        return (await api.post(`ai/chat/translate/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.translated
     },
     // 续写
     continueWrite: async function (params: { content: string }) {
-        return (await api.post(`ai/chat/continue_write/`, params)).data.continued
+        return (await api.post(`ai/chat/continue_write/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.continued
     },
     // 文本改错
     correct: async function (params: { content: string }) {
-        return (await api.post(`ai/correct/`, params)).data.response
+        return (await api.post(`ai/correct/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.response
     },
     // 生成表格
     generateTable: async function (params: { content: string }) {
-        return (await api.post(`ai/chat/form/`, params)).data.res
+        return (await api.post(`ai/chat/form/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.res
     },
 
     //TODO 生成图片
     generateImage: async function (params: Object) {
-        const data = (await api.post(`ai/pictures/generate/`, params)).data
+        const data = (await api.post(`ai/pictures/generate/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data
         const taskId = data.data.primaryTaskId
         await delay(5000)
 
@@ -50,17 +78,33 @@ export default {
     },
     // 语音识别
     voiceRecognize: async function (params: object) {
-        return await api.post(`ai/speeches/recognize/`, params)
+        return await api.post(`ai/speeches/recognize/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
     },
     // 图片目标检测
     objectDetect: async function (params: object) {
-        return await api.post(`ai/ocr/pattern/`, params)
+        return await api.post(`ai/ocr/pattern/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
     },
     OCR: async function (params: object) {
-        return await api.post(`ai/ocr/infer/`, params)
+        return await api.post(`ai/ocr/infer/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
     },
     // 以特定的风格生成文本
     generateText: async function (params: object) {
-        return (await api.post(`ai/chat/styled_ggenerate/`, params)).data.response
+        return (await api.post(`ai/chat/styled_ggenerate/`, params, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })).data.response
     },
 }

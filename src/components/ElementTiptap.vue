@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, ref, unref, watchEffect, defineEmits } from 'vue'
+import { computed, defineComponent, provide, ref, unref, watchEffect, defineEmits, onMounted } from 'vue'
 import { Editor, Extensions } from '@tiptap/core'
 import { EditorProps } from '@tiptap/pm/view'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
@@ -69,34 +69,6 @@ import MenuBubble from './MenuBubble/index.vue'
 import MenuRightSidebar from '@/components/MenuSidebar/MenuRightSidebar.vue'
 import MenuLeftSidebar from '@/components/MenuSidebar/MenuLeftSidebar.vue'
 import { eventBus } from '@/eventBus'
-
-const emit = defineEmits(['useAI'])
-
-eventBus.on('useAI', () => {
-    emit('useAI')
-})
-
-interface Props {
-    extensions: Extensions
-    content?: string | { content: any; type: string }
-    placeholder?: string
-    lang?: string
-    width?: string | number
-    height?: string | number
-    editorProps?: EditorProps
-    output: 'html' | 'json'
-    readonly?: boolean
-    tooltip?: boolean
-    enableCharCount?: boolean
-    charCountMax?: number
-    spellcheck?: boolean
-    // ----- Editor Class -----
-    editorClass?: string | string[] | Record<string, boolean>
-    editorContentClass: string | string[] | Record<string, boolean>
-    editorMenubarClass: string | string[] | Record<string, boolean>
-    editorBubbleMenuClass: string | string[] | Record<string, boolean>
-    editorFooterClass: string | string[] | Record<string, boolean>
-}
 
 export default defineComponent({
     name: 'ElementTiptap',
@@ -241,8 +213,12 @@ export default defineComponent({
         }
 
         const useAI = () => {
-            alert('use AI')
+            emit('useAI')
         }
+
+        onMounted(() => {
+            eventBus.on('useAI', useAI)
+        })
 
         const allExtensions = [...extensions, ...uniqueObjects]
         const editor = useEditor({

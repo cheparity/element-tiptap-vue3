@@ -5,9 +5,6 @@
             <el-menu class="sidebar-menu" mode="horizontal" @select="handleSelect">
                 <el-menu-item index="1">大纲</el-menu-item>
                 <el-menu-item index="2">AI 历史</el-menu-item>
-                <el-menu-item index="3">设置</el-menu-item>
-                <el-menu-item index="4">书签</el-menu-item>
-                <el-menu-item index="5">注释</el-menu-item>
                 <el-menu-item index="6">快捷键</el-menu-item>
             </el-menu>
             <div v-show="selectedMenuItem === '1'">
@@ -22,7 +19,7 @@
                 />
             </div>
             <div style="overflow-y: auto" v-show="selectedMenuItem === '2'">
-                <h2 class="outline__title">AI 历史</h2>
+                <h2 class="outline__title">AI 历史（AI 功能将消耗 E 币）</h2>
                 <HistoryPanel :editor="editor" />
             </div>
             <div v-show="selectedMenuItem === '3'">

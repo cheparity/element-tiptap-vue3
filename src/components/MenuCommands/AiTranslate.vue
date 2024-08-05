@@ -14,8 +14,8 @@ const clickedGenerate = ref(false)
 const props = defineProps({
     editor: {
         type: Editor,
-        required: true
-    }
+        required: true,
+    },
 })
 const t = inject('t')
 const target = ref(['英语', '汉语', '德语', '法语', '日语', '俄语', '意大利语'])

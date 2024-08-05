@@ -1,9 +1,9 @@
 <template>
     <el-container direction="vertical">
         <el-header class="header">
-<!--            <div class="header__left">-->
-<!--                <img src="~demos/assets/logo.svg" alt="logo" class="logo" />-->
-<!--            </div>-->
+            <!--            <div class="header__left">-->
+            <!--                <img src="~demos/assets/logo.svg" alt="logo" class="logo" />-->
+            <!--            </div>-->
 
             <div class="header__right">
                 <router-link

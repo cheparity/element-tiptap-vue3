@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue'
+import { computed, inject, ref, defineEmits } from 'vue'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessage } from 'element-plus'
 import { Editor } from '@tiptap/vue-3'
 import CommandButton from './CommandButton.vue'
@@ -208,6 +208,7 @@ const regenerate = () => {
 
 const handleCommand = (command: string, isRegenerate = false) => {
     props.editor.commands.blur()
+    eventBus.emit('useAI')
     lastCommand.value = command
     if (isRegenerate !== true) {
         lastSelectedContent.value = selectedContent.value

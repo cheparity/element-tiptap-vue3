@@ -47,12 +47,12 @@ export const InlineEquation = Node.create({
         return {
             setInlineEquation:
                 (equation) =>
-                    ({ commands }) => {
-                        return commands.insertContent({
-                            type: this.name,
-                            attrs: { equation },
-                        })
-                    },
+                ({ commands }) => {
+                    return commands.insertContent({
+                        type: this.name,
+                        attrs: { equation },
+                    })
+                },
         }
     },
 

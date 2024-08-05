@@ -47,12 +47,12 @@ export const BlockEquation = Node.create({
         return {
             setBlockEquation:
                 (equation) =>
-                    ({ commands }) => {
-                        return commands.insertContent({
-                            type: this.name,
-                            attrs: { equation },
-                        })
-                    },
+                ({ commands }) => {
+                    return commands.insertContent({
+                        type: this.name,
+                        attrs: { equation },
+                    })
+                },
         }
     },
 

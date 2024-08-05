@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, ref, unref, watchEffect } from 'vue'
+import { computed, defineComponent, provide, ref, unref, watchEffect, defineEmits } from 'vue'
 import { Editor, Extensions } from '@tiptap/core'
 import { EditorProps } from '@tiptap/pm/view'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
@@ -68,6 +68,13 @@ import MenuBar from './MenuBar/index.vue'
 import MenuBubble from './MenuBubble/index.vue'
 import MenuRightSidebar from '@/components/MenuSidebar/MenuRightSidebar.vue'
 import MenuLeftSidebar from '@/components/MenuSidebar/MenuLeftSidebar.vue'
+import { eventBus } from '@/eventBus'
+
+const emit = defineEmits(['useAI'])
+
+eventBus.on('useAI', () => {
+    emit('useAI')
+})
 
 interface Props {
     extensions: Extensions
@@ -232,6 +239,11 @@ export default defineComponent({
                 uniqueObjects.push(obj)
             }
         }
+
+        const useAI = () => {
+            alert('use AI')
+        }
+
         const allExtensions = [...extensions, ...uniqueObjects]
         const editor = useEditor({
             content: props.content,
@@ -321,6 +333,7 @@ export default defineComponent({
             cmTextAreaRef,
             editorStyle,
             setContent,
+            useAI,
         }
     },
 })

@@ -55,25 +55,25 @@ export default defineComponent({
     components: {
         BubbleMenu,
         LinkBubbleMenu,
-        VIcon
+        VIcon,
     },
 
     props: {
         editor: {
             type: Editor,
-            required: true
+            required: true,
         },
 
         menuBubbleOptions: {
             type: Object,
-            default: () => ({})
-        }
+            default: () => ({}),
+        },
     },
 
     data() {
         return {
             activeMenu: MenuType.NONE,
-            isLinkBack: false
+            isLinkBack: false,
         }
     },
 
@@ -108,11 +108,11 @@ export default defineComponent({
             const { selection } = tr
 
             return this.$_isLinkSelection(selection)
-        }
+        },
     },
 
     watch: {
-        'editor.state.selection': function(selection: Selection) {
+        'editor.state.selection': function (selection: Selection) {
             if (this.$_isLinkSelection(selection)) {
                 if (!this.isLinkBack) {
                     this.setMenuType(MenuType.LINK)
@@ -121,7 +121,7 @@ export default defineComponent({
                 this.activeMenu = this.$_getCurrentMenuType()
                 this.isLinkBack = false
             }
-        }
+        },
     },
 
     methods: {
@@ -136,7 +136,7 @@ export default defineComponent({
                     const menuBtnComponentSpec = button({
                         editor: this.editor,
                         t: this.t, // i18n
-                        extension
+                        extension,
                     })
 
                     if (Array.isArray(menuBtnComponentSpec)) {
@@ -144,7 +144,7 @@ export default defineComponent({
                             ...acc,
                             ...menuBtnComponentSpec.map((item) => {
                                 return { ...item, priority: extension.options.priority }
-                            })
+                            }),
                         ]
                     }
 
@@ -183,7 +183,7 @@ export default defineComponent({
                 return MenuType.DEFAULT
             }
             return MenuType.NONE
-        }
-    }
+        },
+    },
 })
 </script>
